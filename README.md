@@ -1,1 +1,1 @@
-Messaging app, implemented using React && Redux
+Messaging app, implemented using React/Redux && Node
