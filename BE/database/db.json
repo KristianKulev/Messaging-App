@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "id": "B1UgXL76Z",
+      "username": "admin",
+      "password": "pass",
+      "role": "admin"
+    },
+    {
+      "id": "asdUdsX226Z",
+      "username": "basic",
+      "password": "pass",
+      "role": "basic"
+    },
+    {
+      "id": "BkhuQjXpZ",
+      "username": "tester",
+      "password": "asd",
+      "role": "basic"
+    }
+  ]
+}

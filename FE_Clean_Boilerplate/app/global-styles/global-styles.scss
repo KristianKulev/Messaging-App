@@ -1,7 +1,7 @@
 @import "~flexboxgrid/css/flexboxgrid.min.css";
 
 @import "./variables";
-
+@import '~react-redux-toastr/src/styles/index.scss';
 html,
 body {
   height: 100%;

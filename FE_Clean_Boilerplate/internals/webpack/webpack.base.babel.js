@@ -13,7 +13,7 @@ const webpack = require('webpack');
 // loader-utils.'
 process.noDeprecation = true;
 
-module.exports = (options) => ({
+module.exports = options => ({
   entry: options.entry,
   output: Object.assign({ // Compile into js/build.js
     path: path.resolve(process.cwd(), 'build'),
@@ -23,7 +23,9 @@ module.exports = (options) => ({
     rules: [
       {
         test: /\.js$/, // Transform all .js files required somewhere with Babel
-        exclude: /node_modules/,
+        // exclude: [/node_modules/],
+        // include: [/node_modules\/react-redux-toastr/],
+        exclude: /node_modules\/(?!(react-redux-toastr)\/).*/,
         use: {
           loader: 'babel-loader',
           options: options.babelQuery,

@@ -28,6 +28,9 @@ class Header extends React.PureComponent { // eslint-disable-line react/prefer-s
         <Link to="/login">
           Login
         </Link>
+        <Link to="/register">
+          Register
+        </Link>
 
 
         <LogoutBtn logout={this.props.logout} isAuthenticated={this.props.userIsAuthenticated} />

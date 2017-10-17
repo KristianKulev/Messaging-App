@@ -2,19 +2,21 @@
   "name": "Hapi_BE",
   "version": "1.0.0",
   "description": "BE with Hapi for messaging app",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kris Kulev",
   "license": "ISC",
   "dependencies": {
+    "app-module-path": "^2.2.0",
     "bcrypt": "^1.0.3",
     "good": "^7.3.0",
     "good-console": "^6.4.0",
     "hapi": "^16.6.2",
     "hapi-login": "^1.2.2",
     "joi": "^11.3.4",
-    "lowdb": "^1.0.0"
+    "lowdb": "^1.0.0",
+    "shortid": "^2.2.8"
   }
 }

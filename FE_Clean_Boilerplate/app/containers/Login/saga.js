@@ -15,7 +15,8 @@ export function* sendLoginRequest(action) {
     const loginData = yield call(request, requestURL, {
       method: 'POST',
       body: JSON.stringify(action.data),
-      responseType: 'json',
+      responseType: 'application/json',
+      // contentType: 'application/json',
     });
     yield put(setLoggedUserdataToStorage(loginData));
     yield put(loginRequestSuccess());
