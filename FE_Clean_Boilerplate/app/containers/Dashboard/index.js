@@ -24,11 +24,6 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
     window.d = this;
   }
 
-  componentWillMount() {
-
-    this.props.getConversations();
-  }
-
   render() {
 
     const conversationItems =
@@ -67,7 +62,6 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
 }
 
 Dashboard.propTypes = {
-  getConversations: PropTypes.func.isRequired,
   dashboard: PropTypes.object.isRequired,
   openConversation: PropTypes.func.isRequired,
 
@@ -79,7 +73,6 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    getConversations: () => dispatch(getConversations()),
     openConversation: conversationId => dispatch(openConversation(conversationId)),
   };
 }

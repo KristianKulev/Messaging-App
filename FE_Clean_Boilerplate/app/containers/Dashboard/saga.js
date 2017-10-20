@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { GET_CONVERSATIONS, OPEN_CONVERSATION } from './constants';
+import { OPEN_CONVERSATION } from './constants';
 import { getConversationsRequestFail, getConversationsRequestSuccess, getConversationDetailsSuccess } from './actions';
 import request from 'utils/request';
 import apiEndpoint from 'configs/CoreConfig.constant';
@@ -48,7 +48,7 @@ export default function* watchAndManageGetConversationsRequests() {
   /**
    * Wathes for GET_CONVERSATIONS
    */
-  yield takeLatest(GET_CONVERSATIONS, sendGetConversationsRequest);
+  yield sendGetConversationsRequest();
 
   yield takeLatest(OPEN_CONVERSATION, sendGetConversationDetailsRequest);
 }

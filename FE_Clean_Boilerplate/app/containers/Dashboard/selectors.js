@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the dashboard state domain
  */
-const selectDashboardDomain = (state) => state.get('dashboard');
+const selectDashboardDomain = state => state.get('dashboard');
 
 /**
  * Other specific selectors
@@ -16,10 +16,22 @@ const selectDashboardDomain = (state) => state.get('dashboard');
 
 const makeSelectDashboard = () => createSelector(
   selectDashboardDomain,
-  (substate) => substate.toJS()
+  substate => substate.toJS()
+);
+
+const makeSelectConversationsMeta = () => createSelector(
+  selectDashboardDomain,
+  substate => substate.toJS().conversationsMeta
+);
+
+const makeSelectОpenedConversationData = () => createSelector(
+  selectDashboardDomain,
+  substate => substate.toJS().openedConversationData
 );
 
 export default makeSelectDashboard;
 export {
   selectDashboardDomain,
+  makeSelectConversationsMeta,
+  makeSelectОpenedConversationData,
 };
