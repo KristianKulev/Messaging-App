@@ -12,6 +12,8 @@ import { Switch, Route } from 'react-router-dom';
 
 import NotFoundPage from 'containers/NotFoundPage/index';
 import TestPage from 'containers/TestPage/index';
+import DashBoard from 'containers/DashBoard/index';
+
 import Login from 'containers/Login/index';
 import Register from 'containers/Register/index';
 import MainNav from 'containers/MainNav';
@@ -33,6 +35,8 @@ export default class App extends React.Component { // eslint-disable-line react/
         <MainNav userIsAuthenticatedFlag={userIsAuthenticatedFlag()}/>
         <Switch>
           <Route path="/test" component={userIsAuthenticated(TestPage)} />
+          <Route path="/dashboard" component={userIsAuthenticated(DashBoard)} />
+
           <Route path="/login" component={userIsNotAuthenticated(Login)} />
           <Route path="/register" component={userIsNotAuthenticated(Register)} />
 

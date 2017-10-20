@@ -22,6 +22,9 @@ class Header extends React.PureComponent { // eslint-disable-line react/prefer-s
     console.log(this.props);
     return (
       <nav className="header-component">
+        <Link to="/dashboard">
+          Dashboard
+        </Link>
         <Link to="/test">
           Test Page
         </Link>

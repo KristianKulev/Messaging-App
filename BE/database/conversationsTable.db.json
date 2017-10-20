@@ -1,0 +1,34 @@
+{
+  "conversations": [
+    {
+      "conversationId": "someConversationId",
+      "messages": [
+        {
+          "sender_id": "some_sender_id",
+          "sentAt": "1/1/21",
+          "data": "hello"
+        },
+        {
+          "sender_id": "some_sender_id",
+          "sentAt": "1/1/21",
+          "data": "hi to you too!"
+        }
+      ]
+    },
+    {
+      "conversationId": "anotherConversationId",
+      "messages": [
+        {
+          "sender_id": "some_sender_id",
+          "sentAt": "3/1/21",
+          "data": "another hello"
+        },
+        {
+          "sender_id": "some_sender_id",
+          "sentAt": "4/1/21",
+          "data": "another hi!"
+        }
+      ]
+    }
+  ]
+}

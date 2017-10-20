@@ -30,6 +30,24 @@ class App {
         validate: require('modules/user/user.validator').authenticateUser
       }
     });
+
+    this.server.route({
+      method: 'GET',
+      path: '/conversations',
+      handler: require('modules/user/user.controller').getConversationsMeta,
+      // config: {
+      //   validate: require('modules/user/user.validator').authenticateUser
+      // }
+    });
+
+    this.server.route({
+      method: 'GET',
+      path: `/conversation/{id}`,
+      handler: require('modules/conversation/conversation.controller').getConversationDetails,
+      // config: {
+      //   validate: require('modules/user/user.validator').authenticateUser
+      // }
+    });
   }
 
   setConfig() {
