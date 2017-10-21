@@ -53,7 +53,7 @@ class App {
   setConfig() {
 
     this.server.connection({
-      host: '192.168.1.83',
+      host: 'localhost',
       port: 8080,
       routes: { cors: true }
     });

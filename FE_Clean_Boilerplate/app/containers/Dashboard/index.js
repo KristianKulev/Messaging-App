@@ -12,10 +12,17 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import makeSelectDashboard from './selectors';
-import { getConversations, openConversation } from './actions';
+import { makeSelectConversationsMeta, makeSelectОpenedConversationData, makeSelectОpenedConversationId } from './selectors';
+import { makeSelectCurrentUserTokenId } from 'containers/App/selectors';
+import { openConversation } from './actions';
 import reducer from './reducer';
 import saga from './saga';
+
+
+
+import DashboardHeader from 'components/DashboardHeader';
+import ConversationsTray from 'components/ConversationsTray';
+import Conversation from 'components/Conversation';
 
 export class Dashboard extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -26,35 +33,18 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
 
   render() {
 
-    const conversationItems =
-      this.props.dashboard && this.props.dashboard.conversationsMeta ?
-        this.props.dashboard.conversationsMeta.map((item, i) => {
-          return (
-            <li key={i}>
-              <p onClick={() => this.props.openConversation(item.id)}>
-                conv. id: {item.id}
-              </p>
-            </li>
-          );
-        }) : '';
-
-    const openedConversation = this.props.dashboard.openedConversationData ?
-      this.props.dashboard.openedConversationData.messages.map((message, i) => {
-        return (
-          <li key={i}>
-            { message.data} { message.sentAt }
-          </li>
-        );
-      }) : <h3>Chat details will open here!</h3>;
     return (
-      <section>
-        <h1>Dashboard</h1>
+      <section className="container-fluid col-xs-12">
+        <DashboardHeader/>
         <section className="row">
-          <ul className="col-xs-30">{conversationItems}</ul>
-          <section className="col-xs">
-            {/* render opened conversation details, or smt */}
-            {openedConversation}
-          </section>
+          <ConversationsTray
+            conversationItems={this.props.conversationsMeta}
+            openConversation={this.props.openConversation}
+            selectedId={this.props.openedConversationId}/>
+
+          <Conversation
+            openedConversation={this.props.openedConversationData}
+            userId={this.props.userId}/>
         </section>
       </section>
     );
@@ -62,13 +52,18 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
 }
 
 Dashboard.propTypes = {
-  dashboard: PropTypes.object.isRequired,
+  conversationsMeta: PropTypes.array,
+  openedConversationData: PropTypes.object,
   openConversation: PropTypes.func.isRequired,
-
+  openedConversationId: PropTypes.string,
+  userId: PropTypes.string,
 };
 
 const mapStateToProps = createStructuredSelector({
-  dashboard: makeSelectDashboard(),
+  openedConversationData: makeSelectОpenedConversationData(),
+  conversationsMeta: makeSelectConversationsMeta(),
+  openedConversationId: makeSelectОpenedConversationId(),
+  userId: makeSelectCurrentUserTokenId(),
 });
 
 function mapDispatchToProps(dispatch) {

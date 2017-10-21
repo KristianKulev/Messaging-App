@@ -29,9 +29,20 @@ const makeSelectОpenedConversationData = () => createSelector(
   substate => substate.toJS().openedConversationData
 );
 
+const makeSelectОpenedConversationId = () => createSelector(
+  selectDashboardDomain,
+  (substate) => {
+    const openedConversationData = substate.toJS().openedConversationData;
+    if (!openedConversationData) return null;
+
+    return openedConversationData.conversationId;
+  }
+);
+
 export default makeSelectDashboard;
 export {
   selectDashboardDomain,
   makeSelectConversationsMeta,
   makeSelectОpenedConversationData,
+  makeSelectОpenedConversationId,
 };

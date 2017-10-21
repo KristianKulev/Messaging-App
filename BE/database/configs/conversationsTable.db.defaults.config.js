@@ -3,12 +3,12 @@ exports.conversations = {
   someConversationId: {
     messages: [
       {
-        sender_id: "some_sender_id",
+        senderId: "some_senderId",
         sentAt: "1/1/21",
         data: "hello"
       },
       {
-        sender_id: "some_sender_id",
+        senderId: "some_senderId",
         sentAt: "1/1/21",
         data: "hello"
       }
