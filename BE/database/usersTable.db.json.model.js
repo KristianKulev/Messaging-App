@@ -31,12 +31,12 @@ const conversationsByIdExample = {
     "some_conversation_id": {
       "messages": [
         {
-          "sender_id": "some_sender_id",
+          "senderId": "some_senderId",
           "sentAt": "1/1/21",
           "data": "hello"
         },
         {
-          "sender_id": "some_sender_id",
+          "senderId": "some_senderId",
           "sentAt": "1/1/21",
           "data": "hello"
         }
@@ -45,12 +45,12 @@ const conversationsByIdExample = {
     "another_conversation_id": {
       "messages": [
         {
-          "sender_id": "some_sender_id",
+          "senderId": "some_senderId",
           "sentAt": "1/1/21",
           "data": "hello"
         },
         {
-          "sender_id": "some_sender_id",
+          "senderId": "some_senderId",
           "sentAt": "1/1/21",
           "data": "hello"
         }

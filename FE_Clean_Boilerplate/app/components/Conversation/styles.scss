@@ -1,0 +1,39 @@
+.conversation-component {
+    margin-top: $margin-s-plus;
+
+    .message-row {
+        margin-bottom: 2px;
+        overflow: hidden;
+    }
+
+    .received {
+        .message {
+            margin-right: $margin-xl-plus;
+            background-color: $primary-grey;
+        }
+    }
+
+    .sent {
+        .message {
+            margin-left: $margin-xl-plus;
+            background-color: $primary-purple;
+            color: $primary-white;
+        }
+    }
+
+    .message {
+        max-width: 75%;
+        min-height: 35px;
+        padding: $padding-s-plus;
+        font-size: 15px;
+        line-height: 15px;
+        border-radius: $radius-l $radius-s $radius-m $radius-s;
+        .text {
+            padding-right: 25px;
+        }
+        .time {
+            font-size: 12px;
+            float: right;
+        }
+    }
+}

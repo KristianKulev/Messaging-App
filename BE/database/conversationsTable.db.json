@@ -4,14 +4,29 @@
       "conversationId": "someConversationId",
       "messages": [
         {
-          "sender_id": "some_sender_id",
+          "senderId": "BkhuQjXpZ",
           "sentAt": "1/1/21",
           "data": "hello"
         },
         {
-          "sender_id": "some_sender_id",
+          "senderId": "BkhuQjXpZ",
+          "sentAt": "1/1/21",
+          "data": "gey"
+        },
+        {
+          "senderId": "BkhuQjXpZ",
+          "sentAt": "1/1/21",
+          "data": "volen"
+        },
+        {
+          "senderId": "some_senderId",
           "sentAt": "1/1/21",
           "data": "hi to you too!"
+        },
+        {
+          "senderId": "some_senderId",
+          "sentAt": "1/1/22",
+          "data": "kek dela?"
         }
       ]
     },
@@ -19,12 +34,12 @@
       "conversationId": "anotherConversationId",
       "messages": [
         {
-          "sender_id": "some_sender_id",
+          "senderId": "some_senderId",
           "sentAt": "3/1/21",
           "data": "another hello"
         },
         {
-          "sender_id": "some_sender_id",
+          "senderId": "some_senderId",
           "sentAt": "4/1/21",
           "data": "another hi!"
         }

@@ -1,0 +1,30 @@
+.conversations-tray-component {
+    height: max-content;
+    margin-top: $margin-s-plus;
+    border: 1px solid $border-grey;
+    border-left: none;
+
+    li {
+        padding: $padding-m $padding-m-plus;
+        
+        .img {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            margin-right: $margin-s-plus;
+            border-radius: 50%;
+            background: red;
+        }
+
+        p {
+            line-height: 50px;
+        }
+        
+        &:hover, &.is-selected {
+            background-color: $secondary-grey;
+        }
+        // &:not(:last-of-type) {
+        //     border-bottom: 1px solid $border-grey;
+        // }
+    }
+}
