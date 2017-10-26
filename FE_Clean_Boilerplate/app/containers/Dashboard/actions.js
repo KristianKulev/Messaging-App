@@ -10,6 +10,10 @@ import {
   GET_CONVERSATIONS_FAIL,
   OPEN_CONVERSATION,
   GET_CONVERSATION_DETAILS_SUCCESS,
+  SEND_NEW_MESSAGE,
+  HANDLE_NEW_MESSAGE,
+  CANCEL_SUBSCRIPTIONS_BY_ID,
+  INIT_SUBSCRIPTION_WITH_ID,
 } from './constants';
 
 export function getConversations() {
@@ -42,6 +46,36 @@ export function getConversationsRequestFail() {
 export function getConversationDetailsSuccess(data) {
   return {
     type: GET_CONVERSATION_DETAILS_SUCCESS,
+    data,
+  };
+}
+
+export function sendNewMessage(data) {
+  return {
+    type: SEND_NEW_MESSAGE,
+    data,
+  };
+}
+
+export function handleNewMessage(data) {
+  return {
+    type: HANDLE_NEW_MESSAGE,
+    data,
+  };
+}
+
+export function cancelSubscriptionsById(id) {
+  console.log('action cancelSubscriptionsById', id);
+  return {
+    type: CANCEL_SUBSCRIPTIONS_BY_ID,
+    id,
+  };
+}
+
+export function initSubscriptionWithId(data) {
+  console.log('act', data.id);
+  return {
+    type: INIT_SUBSCRIPTION_WITH_ID,
     data,
   };
 }

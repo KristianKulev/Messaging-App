@@ -7,7 +7,7 @@
       "role": "admin",
       "activeConversationsMeta": [
         {
-          "id": "someConversationId",
+          "id": "admin-tester-conversation",
           "participenIds": [
             "id_one"
           ]
@@ -35,7 +35,7 @@
       "role": "basic",
       "activeConversationsMeta": [
         {
-          "id": "someConversationId",
+          "id": "admin-tester-conversation",
           "participenIds": [
             "id_one"
           ]

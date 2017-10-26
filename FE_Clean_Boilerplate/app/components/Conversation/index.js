@@ -12,8 +12,6 @@ import './styles.scss';
 class Conversation extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super();
-    window.m = this;
-    console.log(props);
     this.props = props;
   }
 
@@ -25,7 +23,7 @@ class Conversation extends React.Component { // eslint-disable-line react/prefer
           <li key={i} className={`message-row row ${message.senderId === this.props.userId ? 'sent end-xs' : 'received start-xs'}`}>
             <p className="message">
               <span className="text"> { message.data }</span>
-              <span className="time"> { message.sentAt }</span>
+              <span className="time"> { new Date(message.sentAt).toLocaleTimeString() }</span>
             </p>
           </li>
         );

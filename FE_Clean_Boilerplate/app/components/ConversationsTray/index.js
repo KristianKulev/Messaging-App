@@ -12,9 +12,15 @@ import './styles.scss';
 class ConversationsTray extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
     super();
-    window.c = this;
-    console.log(props);
     this.props = props;
+  }
+
+
+  triggerOpenConversation(isConversationOpened, id) {
+
+    if (isConversationOpened) return;
+
+    this.props.openConversation(id);
   }
 
   render() {
@@ -22,8 +28,14 @@ class ConversationsTray extends React.Component { // eslint-disable-line react/p
     if (!this.props.conversationItems) return null;
 
     const conversationItems = this.props.conversationItems.map((item, i) => {
+
+      const isConversationOpened = this.props.selectedId && item.id === this.props.selectedId;
+
       return (
-        <li key={i} className={`col-xs ${this.props.selectedId && item.id === this.props.selectedId ? 'is-selected' : ''}`} onClick={() => this.props.openConversation(item.id)}>
+        <li
+          key={i}
+          className={`col-xs ${isConversationOpened ? 'is-selected' : ''}`}
+          onClick={() => this.triggerOpenConversation(isConversationOpened, item.id)}>
           <p>
             <span className="img">img </span>{item.id}
           </p>
@@ -46,6 +58,7 @@ class ConversationsTray extends React.Component { // eslint-disable-line react/p
 ConversationsTray.propTypes = {
   conversationItems: PropTypes.array,
   selectedId: PropTypes.string,
+  openConversation: PropTypes.func.isRequired,
 };
 
 export default ConversationsTray;

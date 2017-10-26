@@ -32,7 +32,14 @@ export default ({ key, saga, mode }) => (WrappedComponent) => {
     componentWillUnmount() {
       const { ejectSaga } = this.injectors;
 
-      ejectSaga(key);
+      /**
+       * timeout required, so that any sagas, listening for actions,
+       * triggered on componentWillUnmount, can finish
+       */
+
+       // TODO: investigate other options, since this isn't working with
+       // current implementation and it's prone to breaking anyway
+      setTimeout(ejectSaga(key), 0);
     }
 
     injectors = getInjectors(this.context.store);

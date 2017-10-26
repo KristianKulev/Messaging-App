@@ -49,6 +49,10 @@ const getGlobalStateFromStorage = () => {
   };
 };
 
+const getUsername = () => {
+  return storageService.get('session', 'username');
+};
+
 const userIsAuthenticatedFlag = () => {
   return storageService.exists('session', 'token_id');
 };
@@ -69,6 +73,7 @@ export {
   userIsNotAuthenticated,
   userIsAuthenticated,
   getGlobalStateFromStorage,
+  getUsername,
   userIsAuthenticatedFlag,
   visibleOnlyWhenLoggedIn,
   visibleOnlyAdmin,

@@ -10,6 +10,7 @@ class ConversationModel {
     this.idGenerator = idGenerator;
 
     this.getConversationHistory = this.getConversationHistory.bind(this);
+    this.addNewMessageToConversation = this.addNewMessageToConversation.bind(this);
   }
 
   getConversationHistory(conversationId, callback) {
@@ -18,10 +19,24 @@ class ConversationModel {
       .find({ conversationId: conversationId })
       .value();
   };
+
+  addNewMessageToConversation(conversationData, callback) {
+
+    return this.conversationsDb.get('conversations')
+      .find({ conversationId: conversationData.conversationId })
+      .get('messages')
+      .push({
+        senderId: conversationData.data.senderId,
+        sentAt: conversationData.data.sentAt,
+        data: conversationData.data.data,
+      })
+      .write();
+  };
 }
 
 const conversationModel = new ConversationModel(conversationsDb, shortid);
 
 module.exports = {
-  getConversationHistory: conversationModel.getConversationHistory
+  getConversationHistory: conversationModel.getConversationHistory,
+  addNewMessageToConversation: conversationModel.addNewMessageToConversation
 };

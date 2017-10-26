@@ -1,32 +1,52 @@
 {
   "conversations": [
     {
-      "conversationId": "someConversationId",
+      "conversationId": "admin-tester-conversation",
       "messages": [
         {
-          "senderId": "BkhuQjXpZ",
+          "senderId": "B1UgXL76Z",
           "sentAt": "1/1/21",
-          "data": "hello"
+          "data": "hello, I am admin"
         },
         {
-          "senderId": "BkhuQjXpZ",
+          "senderId": "B1UgXL76Z",
           "sentAt": "1/1/21",
           "data": "gey"
         },
         {
-          "senderId": "BkhuQjXpZ",
+          "senderId": "B1UgXL76Z",
           "sentAt": "1/1/21",
           "data": "volen"
         },
         {
-          "senderId": "some_senderId",
+          "senderId": "BkhuQjXpZ",
           "sentAt": "1/1/21",
-          "data": "hi to you too!"
+          "data": "hi to you too, I am tester!"
         },
         {
-          "senderId": "some_senderId",
+          "senderId": "BkhuQjXpZ",
           "sentAt": "1/1/22",
           "data": "kek dela?"
+        },
+        {
+          "senderId": "B1UgXL76Z",
+          "sentAt": "2017-10-26T14:05:00.628Z",
+          "data": "another hi!"
+        },
+        {
+          "senderId": "B1UgXL76Z",
+          "sentAt": "2017-10-26T14:05:32.979Z",
+          "data": "another hi!"
+        },
+        {
+          "senderId": "BkhuQjXpZ",
+          "sentAt": "2017-10-26T14:05:57.066Z",
+          "data": "another hi!"
+        },
+        {
+          "senderId": "B1UgXL76Z",
+          "sentAt": "2017-10-26T14:05:59.634Z",
+          "data": "another hi!"
         }
       ]
     },
@@ -34,13 +54,33 @@
       "conversationId": "anotherConversationId",
       "messages": [
         {
-          "senderId": "some_senderId",
+          "senderId": "BkhuQjXpZ",
           "sentAt": "3/1/21",
           "data": "another hello"
         },
         {
-          "senderId": "some_senderId",
-          "sentAt": "4/1/21",
+          "senderId": "BkhuQjXpZ",
+          "sentAt": "2017-10-26T12:08:46.348Z",
+          "data": "another hi!"
+        },
+        {
+          "senderId": "BkhuQjXpZ",
+          "sentAt": "2017-10-26T13:54:40.924Z",
+          "data": "another hi!"
+        },
+        {
+          "senderId": "BkhuQjXpZ",
+          "sentAt": "2017-10-26T13:54:44.563Z",
+          "data": "another hi!"
+        },
+        {
+          "senderId": "BkhuQjXpZ",
+          "sentAt": "2017-10-26T13:54:45.651Z",
+          "data": "another hi!"
+        },
+        {
+          "senderId": "BkhuQjXpZ",
+          "sentAt": "2017-10-26T13:54:46.939Z",
           "data": "another hi!"
         }
       ]

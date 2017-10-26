@@ -35,7 +35,7 @@ export default class App extends React.Component { // eslint-disable-line react/
         <MainNav userIsAuthenticatedFlag={userIsAuthenticatedFlag()}/>
         <Switch>
           <Route path="/test" component={userIsAuthenticated(TestPage)} />
-          <Route path="/dashboard" component={userIsAuthenticated(DashBoard)} />
+          <Route path="/dashboard/:conversationId?" component={userIsAuthenticated(DashBoard)} />
 
           <Route path="/login" component={userIsNotAuthenticated(Login)} />
           <Route path="/register" component={userIsNotAuthenticated(Register)} />

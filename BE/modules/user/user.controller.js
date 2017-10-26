@@ -58,6 +58,7 @@ class UserController {
         reply({
           authToken: this.userTryingToLogin.id, //TODO: add real Auth tokens
           uiPermissions: this._getUiPermissionsBasedOnRole(),
+          username: this.userTryingToLogin.username,
         });
         break;
 
