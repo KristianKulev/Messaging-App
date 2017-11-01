@@ -23,6 +23,61 @@ body.fontLoaded {
   min-width: 100%;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'OpenSans-Bold';
+  margin: 0;
+  word-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1 {
+  font-size: 29px;
+  color: $text-black;
+  line-height: 44px;
+  font-family: 'OpenSans-Light';
+}
+
+h2 {
+  font-size: 24px;
+  color: $text-black;
+  line-height: 34px;
+  font-family: 'OpenSans-Light';
+}
+
+h3 {
+  font-size: 20px;
+  color: $text-black;
+  line-height: 32px;
+  font-family: 'OpenSans-Light';
+}
+
+h4 {
+  font-size: 18px;
+  color: $text-black;
+  line-height: 25px;
+  font-family: 'OpenSans-Regular';
+}
+
+h5 {
+  font-size: 15px;
+  color: $text-black;
+  font-family: 'OpenSans-Light';
+}
+
+p, ul {
+  font-family: 'OpenSans-Regular';
+  font-size: 14px;
+  line-height: 20px;
+  color: $text-black;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  word-wrap: break-word;
+}
+
 p,
 label {
   font-family: Georgia, Times, 'Times New Roman', serif;

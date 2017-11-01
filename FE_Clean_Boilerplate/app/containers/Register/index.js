@@ -11,8 +11,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import Validation from 'react-validation';
-
 import classNames from 'classnames';
 
 import injectSaga from 'utils/injectSaga';
@@ -22,6 +20,7 @@ import reducer from './reducer';
 import saga from './saga';
 
 import Form from 'components/Form';
+import { Input } from 'formsy-react-components';
 
 import { makeSelectRegister, makeSelectRegisterError } from './selectors';
 import { sendRegisterRequest } from './actions';
@@ -33,69 +32,65 @@ export class Register extends React.Component { // eslint-disable-line react/pre
     window.r = this;
   }
 
-  onSubmit(e) {
-    e.preventDefault();
+  onSubmit(data) {
 
-    const components = this.form.components;
-
-    this.props.sendRegisterRequest({
-      username: components.username.state.value,
-      password: components.password.state.value,
-    });
+    this
+      .props
+      .sendRegisterRequest({ username: data.username, password: data.password });
   }
 
   render() {
     return (
-      <Form className="row center-xs">
-        <Validation.components.Form
-          ref={c => this.form = c}
-          onSubmit={(e, data) => this.onSubmit(e, data)}
-          className="col-xs-6 start-xs">
-          <h3>Register</h3>
-          <section className="form-section">
-            <label htmlFor="username">
-              <span>Username*</span>
-              <Validation.components.Input
-                value=""
-                name="username"
-                validations={['required']}
-                errorClassName="is-invalid-input"/>
-            </label>
-          </section>
-          <section className="form-section">
-            <label htmlFor="password">
-              <span>Password*</span>
-              <Validation.components.Input
-                type="password"
-                value=""
-                name="password"
-                validations={['required']}
-                errorClassName="is-invalid-input"/>
-            </label>
-          </section>
+      <Form onSubmitCallback={data => this.onSubmit(data)} className="login col-xs-6">
+        <h3>Register</h3>
+        <fieldset className="form-section">
+          <Input
+            name="username"
+            value=""
+            label="Username"
+            type="text"
+            placeholder="Username"
+            validations={{
+              minLength: 3,
+            }}
+            validationErrors={{
+              isDefaultRequiredValue: 'Username field is required.',
+              minLength: 'Username should be at least 3 chars in length.',
+            }}
+            required/>
+          <Input
+            name="password"
+            value=""
+            label="Password"
+            type="password"
+            placeholder="Password"
+            validations={{
+              minLength: 3,
+            }}
+            validationErrors={{
+              isDefaultRequiredValue: 'Password field is required.',
+              minLength: 'Password should be at least 3 chars in length.',
+            }}
+            required/>
+          <Input
+            name="passwordConfirm"
+            value=""
+            label="Confirm password"
+            type="password"
+            validations="equalsField:password"
+            validationErrors={{
+              equalsField: 'Passwords must match.',
+            }}
+            placeholder="Retype password"/>
 
-          {/* TODO: add validation for password match before send! */}
-          <section className="form-section">
-            <label htmlFor="repeatPassword">
-              <span>Repeat Password*</span>
-              <Validation.components.Input
-                type="password"
-                value=""
-                name="repeatPassword"
-                validations={['required']}
-                errorClassName="is-invalid-input"/>
-            </label>
-          </section>
+        </fieldset>
+        <fieldset className="form-section">
 
-          <section
-            className={classNames('form-section form-error is-visible',
-            { 'display-none': !this.props.registerError })}>
-            registerError
-          </section>
-          <section className="form-section">
-            <Validation.components.Button>Submit</Validation.components.Button>
-          </section>
-        </Validation.components.Form>
+          <button className="btn btn-primary" formNoValidate>
+            Submit
+          </button>
+
+        </fieldset>
       </Form>
     );
   }
@@ -106,10 +101,7 @@ Register.propTypes = {
   registerError: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  register: makeSelectRegister(),
-  registerError: makeSelectRegisterError(),
-});
+const mapStateToProps = createStructuredSelector({ register: makeSelectRegister(), registerError: makeSelectRegisterError() });
 
 function mapDispatchToProps(dispatch) {
   return {

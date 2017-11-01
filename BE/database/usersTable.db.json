@@ -61,6 +61,27 @@
       "password": "eee",
       "role": "basic",
       "activeConversationsMeta": []
+    },
+    {
+      "id": "SJzjvmwCb",
+      "username": "qwe",
+      "password": "qwe",
+      "role": "basic",
+      "activeConversationsMeta": []
+    },
+    {
+      "id": "HJfTwLvAb",
+      "username": "rer",
+      "password": "rer",
+      "role": "basic",
+      "activeConversationsMeta": []
+    },
+    {
+      "id": "rkMP9PD0b",
+      "username": "dsa",
+      "password": "dsa",
+      "role": "basic",
+      "activeConversationsMeta": []
     }
   ]
 }

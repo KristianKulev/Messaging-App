@@ -17,8 +17,7 @@ import DashBoard from 'containers/DashBoard/index';
 import Login from 'containers/Login/index';
 import Register from 'containers/Register/index';
 import MainNav from 'containers/MainNav';
-import ReduxToastr from 'react-redux-toastr';
-import FormValidationRules from 'configs/FormValidation.config'; // eslint-disable-line
+import ReduxToastr from 'react-redux-toastr/lib';
 
 import { userIsAuthenticated, userIsNotAuthenticated, userIsAuthenticatedFlag } from 'services/auth.service';
 

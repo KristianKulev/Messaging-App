@@ -1,10 +1,21 @@
 /* Colors */
-$primary-black: black;
+$primary-black: #000;
 $primary-white: #fff;
 $primary-purple: #7646ff;
 $primary-grey: #f1f0f0;
+$primary-red: #ff0000;
+$secondary-red: #ec5840;
+
 $secondary-grey: #f3f3f3;
 $border-grey: #c9c1c1;
+$text-black: black;
+
+/* Specific Colors */
+$color-error: $primary-red;
+$color-error-border: $secondary-red;
+$color-error-background: #f9eae7;
+
+
 /* Others */
 $radius-s: 2px;
 $radius-m: 5px;

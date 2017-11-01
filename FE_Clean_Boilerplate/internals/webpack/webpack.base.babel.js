@@ -23,9 +23,8 @@ module.exports = options => ({
     rules: [
       {
         test: /\.js$/, // Transform all .js files required somewhere with Babel
-        // exclude: [/node_modules/],
-        // include: [/node_modules\/react-redux-toastr/],
         exclude: /node_modules\/(?!(react-redux-toastr)\/).*/,
+
         use: {
           loader: 'babel-loader',
           options: options.babelQuery,
