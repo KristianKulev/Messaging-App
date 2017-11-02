@@ -35,8 +35,6 @@ import DashboardHeader from 'components/DashboardHeader';
 import ConversationsTray from 'components/ConversationsTray';
 import Conversation from 'components/Conversation';
 
-// import { initClientSubscription, cancelClientSubscriptions } from 'utils/request';
-
 export class Dashboard extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   constructor() {
@@ -44,44 +42,71 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
     window.d = this;
   }
 
-  componentDidMount() {
+  shouldComponentUpdate(nextProps) {
 
+    // Prevent update, since this is triggered from initial router.push('dashboard/[conversationIdInUrl]')
+    if (!this.props.openedConversationId && nextProps.openedConversationId) {
 
-    // TODO: investigate other options, since these timeouts are prone to breaking!
+      return false;
+    }
 
+    return true;
+  }
+
+  componentWillMount() {
 
     // trigger conversation loading, if conversationId param is present
     const conversationIdInUrl = this.props.match.params.conversationId;
 
     if (conversationIdInUrl && !this.props.openedConversationId) {
 
-      // timeout required, so that sagas have time to load
-      setTimeout(() => this.props.openConversation(conversationIdInUrl), 300);
-    }
-
-    if (this.props.openedConversationId) {
-
-      // send an action to open the subscription; the saga will listen for that action
-      setTimeout(() => this.props.initSubscriptionWithId({
-
-        id: this.props.openedConversationId,
-        callback: this.props.handleNewMessage,
-
-      }), 1000);
+      this.props.openConversation(conversationIdInUrl);
     }
   }
 
-  componentWillUnmount() {
-    console.log(this.props.openedConversationId, this.props.openedConversationData.conversationId);
-    // trigger unsubsribe action for the conversation
-    this.props.cancelSubscriptionsById(this.props.openedConversationId);
-    // cancelClientSubscriptions(this.props.openedConversationId);
+  componentWillReceiveProps(newProps) {
+
+    if (newProps.openedConversationId && newProps.openedConversationId !== this.props.openedConversationId) {
+
+      if (this.props.openedConversationId) {
+
+        // cancel prev subscription
+        this.props.cancelSubscriptionsById(this.props.openedConversationId);
+      }
+
+      // trigger start new subscription
+      this.props.initSubscriptionWithId({
+
+        id: newProps.openedConversationId,
+        callback: this.props.handleNewMessage,
+      });
+    }
+  }
+
+  onMessageSubmit(msgText) {
+
+    this.props.submitMessage({
+      conversationId: this.props.openedConversationId,
+      payload: {
+        data: msgText,
+        senderId: this.props.userId,
+        sentAt: new Date(),
+      },
+    });
   }
 
   render() {
 
+    const openedConversationUI = this.props.openedConversationId ?
+      (
+        <Conversation
+          openedConversation={this.props.openedConversationData}
+          userId={this.props.userId}
+          onMessageSubmit={msgText => this.onMessageSubmit(msgText)}/>
+      ) : <h3>Welcome, select a chat and start a conversation!</h3>;
+
     return (
-      <section className="container-fluid col-xs-12">
+      <section className="column col-xs">
         <h1
           onClick={() => {
             this.props.cancelSubscriptionsById(this.props.openedConversationId);
@@ -102,15 +127,13 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
 
 
         <DashboardHeader/>
-        <section className="row">
+        <section className="col-xs row">
           <ConversationsTray
             conversationItems={this.props.conversationsMeta}
             openConversation={this.props.openConversation}
             selectedId={this.props.openedConversationId}/>
 
-          <Conversation
-            openedConversation={this.props.openedConversationData}
-            userId={this.props.userId}/>
+          { openedConversationUI }
         </section>
       </section>
     );

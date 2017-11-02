@@ -8,7 +8,7 @@ import {
   getConversationDetailsSuccess,
 } from './actions';
 import request from 'utils/request';
-import { nesRequest, cancelClientSubscriptions, initClientSubscription } from 'utils/request';
+import { websocketClient } from 'utils/websocketRequest';
 
 import apiEndpoint from 'configs/CoreConfig.constant';
 
@@ -65,7 +65,7 @@ export function* sendNewMessage(action) {
       }),
     };
 
-    nesRequest(message);
+    websocketClient.makeRequest(message);
 
   } catch (err) {
     console.log(err);
@@ -73,32 +73,33 @@ export function* sendNewMessage(action) {
 }
 
 export function* cancelMessageSubscriptions(action) {
-  console.log('CANCEL in SAGA', action);
+
   const subscriptionPath = `/new-message/${action.id}`;
 
-  cancelClientSubscriptions(subscriptionPath);
+  websocketClient.cancelSubscriptions(subscriptionPath);
 }
 
 export function* initMessageSubscription(action) {
-  console.log('saga');
+
   const subscriptionPath = `/new-message/${action.data.id}`;
 
-  initClientSubscription(subscriptionPath, action.data.callback);
+  websocketClient.initSubscription(subscriptionPath, action.data.callback);
 }
 
 /**
  * Root saga manages watcher lifecycle
  */
 export default function* watchAndManageGetConversationsRequests() {
-  /**
-   * Wathes for GET_CONVERSATIONS
-   */
-  yield sendGetConversationsRequest();
 
   /**
    * Wathes for OPEN_CONVERSATION, pulls the details for the newly opened one
    */
   yield takeLatest(OPEN_CONVERSATION, sendGetConversationDetailsRequest);
+
+  /**
+   * Wathes for GET_CONVERSATIONS
+   */
+  yield sendGetConversationsRequest();
 
   /**
    * Wathes for SEND_NEW_MESSAGE, sends request to the server with WS

@@ -23,6 +23,7 @@ export function getConversations() {
 }
 
 export function openConversation(data) {
+
   return {
     type: OPEN_CONVERSATION,
     data,
@@ -65,7 +66,7 @@ export function handleNewMessage(data) {
 }
 
 export function cancelSubscriptionsById(id) {
-  console.log('action cancelSubscriptionsById', id);
+
   return {
     type: CANCEL_SUBSCRIPTIONS_BY_ID,
     id,
@@ -73,7 +74,7 @@ export function cancelSubscriptionsById(id) {
 }
 
 export function initSubscriptionWithId(data) {
-  console.log('act', data.id);
+
   return {
     type: INIT_SUBSCRIPTION_WITH_ID,
     data,

@@ -1,0 +1,62 @@
+import Nes from 'nes/client';
+
+class WebsocketClient {
+  constructor() {
+    this.socket = new Nes.Client('ws://localhost:8080');
+    this.cachedSubscriptionPath = '';
+  }
+
+  setupConnection() {
+
+    this.socket.connect((err) => {
+
+      if (err) {
+
+        console.log(err);
+      }
+    });
+  }
+
+  makeRequest(message) {
+
+    this.socket.request(message, (err, res) => {
+      if (err) {
+        return err;
+      }
+
+      return res;
+    });
+  }
+
+  initSubscription(subscriptionPath, callback) {
+
+    if (this.cachedSubscriptionPath) return;
+
+      // save for future reference, when unsubscribing
+    this.cachedSubscriptionPath = subscriptionPath;
+
+    this.socket.subscribe(subscriptionPath, (msg) => {
+
+      callback(msg);
+    });
+  }
+
+  cancelSubscriptions(subscriptionPath) {
+
+      // unsubsribe from all handlers for this Id
+    this.socket.unsubscribe(subscriptionPath, null, err => err);
+
+    this.cachedSubscriptionPath = '';
+  }
+}
+
+const websocketClient = new WebsocketClient();
+websocketClient.setupConnection();
+
+// For testing
+window.nes = websocketClient;
+
+export {
+  websocketClient,
+};
+
