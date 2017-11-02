@@ -38,6 +38,12 @@ class WebsocketClient {
     this.socket.subscribe(subscriptionPath, (msg) => {
 
       callback(msg);
+
+    }, (err) => {
+
+      if (err) {
+        console.log(err);
+      }
     });
   }
 
