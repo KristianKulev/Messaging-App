@@ -1,8 +1,20 @@
-@import "~flexboxgrid/css/flexboxgrid.min.css";
+// @import "~flexboxgrid/css/flexboxgrid.min.css";
+@import "./flexbox-grid.scss";
 @import "./normalize";
 
 @import "./variables";
 @import '~react-redux-toastr/src/styles/index.scss';
+
+// fill in for missing class in flexbox-grid library
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-height {
+  height: 100vh;
+}
+
 html,
 body {
   height: 100%;

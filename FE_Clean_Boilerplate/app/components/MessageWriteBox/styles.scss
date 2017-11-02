@@ -1,0 +1,9 @@
+.message-write-box-component {
+  margin: $margin-xl 0 0;
+  padding: $padding-l 0 0;
+  border-top: 1px solid $border-grey;
+
+  label {
+    display: none;
+  }
+}

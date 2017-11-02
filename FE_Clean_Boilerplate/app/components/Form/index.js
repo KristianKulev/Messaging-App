@@ -55,6 +55,15 @@ class WrappedForm extends React.PureComponent {
     this.formInstance = form;
   }
 
+  reset(input) {
+    this.formInstance.formsyForm.reset(input);
+
+    this.setState({
+      canSubmit: false,
+      hasSubmitBeenTried: false,
+    });
+  }
+
   render() {
 
     return (
