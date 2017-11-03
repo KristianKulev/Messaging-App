@@ -13,12 +13,6 @@ import './styles.scss';
 
 class MessageWriteBox extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
-  constructor() {
-    super();
-    // this.cleanMessageBox = this.cleanMessageBox.bind(this);
-
-  }
-
   cleanMessageBox() {
 
     this.formInstance.reset({ messageText: '' });
@@ -48,8 +42,9 @@ class MessageWriteBox extends React.PureComponent { // eslint-disable-line react
         ref={(formRef) => {
           this.formInstance = formRef;
         }}
-        className="message-write-box-component">
+        className="row message-write-box-component">
         <Textarea
+          rowClassName="col-xs"
           name="messageText"
           placeholder="Write a message"
           validations="minLength:1"

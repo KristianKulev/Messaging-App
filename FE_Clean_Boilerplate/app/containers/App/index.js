@@ -30,7 +30,7 @@ export default class App extends React.Component { // eslint-disable-line react/
   render() {
 
     return (
-      <section className="column full-height">
+      <section className="app-container container column full-height">
         <MainNav userIsAuthenticatedFlag={userIsAuthenticatedFlag()}/>
         <Switch>
           <Route path="/test" component={userIsAuthenticated(TestPage)} />

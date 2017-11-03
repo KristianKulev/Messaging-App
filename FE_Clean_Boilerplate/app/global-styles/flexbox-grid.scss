@@ -1,10 +1,10 @@
 @mixin col {
   flex: 0 0 auto;
-  padding-right: $padding;
-  padding-left: $padding;
+  padding-right: $spacingDefault;
+  padding-left: $spacingDefault;
 }
 
-$padding: 15px;
+$spacingDefault: 15px;
 
 $width-1: 8.33333333%;
 $width-2: 16.66666667%;
@@ -57,15 +57,15 @@ $media-lg: 1300px;
 @mixin col-offset-11 { margin-left: $width-11; }
 
 .container {
-  padding-right: $padding;
-  padding-left: $padding;
+  padding-right: $spacingDefault;
+  padding-left: $spacingDefault;
   margin-right: auto;
   margin-left: auto;
 }
 
 .container-fluid {
-  padding-right: $padding;
-  padding-left: $padding;
+  padding-right: $spacingDefault;
+  padding-left: $spacingDefault;
   margin-right: auto;
   margin-left: auto;
 }
@@ -74,8 +74,8 @@ $media-lg: 1300px;
   display: flex !important;
   flex-direction: row;
   flex-wrap: wrap;
-  margin-right: -$padding;
-  margin-left: -$padding;
+  margin-right: -$spacingDefault;
+  margin-left: -$spacingDefault;
 
   &--no-margin {
     margin-right: 0 !important;
@@ -117,13 +117,18 @@ $media-lg: 1300px;
     padding-right: 0;
   }
 
+  &--no-padding[class*="col-"] {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
   &--trim-padding {
     > [class*="col-"]:first-child {
-        padding-left: 0 !important;
+      padding-left: 0 !important;
     }
 
     > [class*="col-"]:last-child {
-        padding-right: 0 !important;
+      padding-right: 0 !important;
     }
   }
 }
@@ -193,15 +198,15 @@ $media-lg: 1300px;
 @media only screen and (max-width: $media-xs-end) {
   .container {
     // width: 290px;
-    margin-left: $padding;
-    margin-right: $padding;
+    // margin-left: $spacingDefault;
+    // margin-right: $spacingDefault;
   }
   .hide-xs { display: none!important;}
 }
 
 @media only screen and (min-width: $media-sm) {
   .container {
-    width: 750px;
+    // width: 750px;
   }
 
   .col-sm,
@@ -269,7 +274,7 @@ $media-lg: 1300px;
 
 @media only screen and (min-width: 992px) {
   .container {
-    width: 970px;
+    // width: 970px;
   }
 
   .col-md,
@@ -335,7 +340,7 @@ $media-lg: 1300px;
 
 @media only screen and (min-width: $media-lg) {
   .container {
-      width: 1280px;
+      // width: 1280px;
   }
 
   .col-lg,

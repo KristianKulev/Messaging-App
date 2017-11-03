@@ -6,7 +6,9 @@
   border-left: none;
 
   li {
+    max-height: 80px;
     padding: $padding-m $padding-m-plus;
+    cursor: pointer;
 
     .img {
       display: inline-block;
@@ -19,6 +21,9 @@
 
     p {
       line-height: 50px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     &:hover, &.is-selected {

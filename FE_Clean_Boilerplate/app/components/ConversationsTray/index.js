@@ -34,7 +34,7 @@ class ConversationsTray extends React.Component { // eslint-disable-line react/p
       return (
         <li
           key={i}
-          className={`col-xs ${isConversationOpened ? 'is-selected' : ''}`}
+          className={`row ${isConversationOpened ? 'is-selected' : ''}`}
           onClick={() => this.triggerOpenConversation(isConversationOpened, item.id)}>
           <p>
             <span className="img">img </span>{item.id}
@@ -45,9 +45,9 @@ class ConversationsTray extends React.Component { // eslint-disable-line react/p
 
 
     return (
-      <aside className="conversations-tray-component col-xs-5">
+      <aside className="conversations-tray-component column col-xs-5">
 
-        <ul className="row coversations-tray">
+        <ul className="column col-xs coversations-tray">
           {conversationItems}
         </ul>
       </aside>

@@ -26,6 +26,8 @@ class Conversation extends React.Component { // eslint-disable-line react/prefer
   componentDidMount() {
 
     this.coversationMessagesContainer = document.getElementById('coversationMessagesContainer');
+
+    // TODO: on refresh, this requires a timeout in order to scroll to the bottom => investigate
     this.goToBottomOfChatArea();
   }
 
@@ -41,6 +43,7 @@ class Conversation extends React.Component { // eslint-disable-line react/prefer
   goToBottomOfChatArea() {
     this.coversationMessagesContainer.scrollTop = this.coversationMessagesContainer.scrollHeight;
   }
+
   render() {
 
     const conversationMsgs = this.props.openedConversation && this.props.openedConversation.messages.length ?

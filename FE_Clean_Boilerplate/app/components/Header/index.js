@@ -24,7 +24,7 @@ const LoggedInAs = visibleOnlyWhenLoggedIn(props => (
 class Header extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <nav className="header-component">
+      <nav className="header-component row">
         <Link to="/dashboard">
           Dashboard
         </Link>

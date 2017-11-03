@@ -106,36 +106,19 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
       ) : <h3>Welcome, select a chat and start a conversation!</h3>;
 
     return (
-      <section className="column col-xs">
-        <h1
-          onClick={() => {
-            this.props.cancelSubscriptionsById(this.props.openedConversationId);
-          }}>remove subs!</h1>
-        <h1
-          onClick={() => {
-            this.props.submitMessage({
-              conversationId: this.props.openedConversationId,
-              payload: {
-                data: 'another hi!',
-                senderId: this.props.userId,
-                sentAt: new Date(),
-              },
-            });
-          }}>
-          Send Post Message
-        </h1>
+      <div className="row row--no-padding col-xs">
+        <section className="column column--no-padding col-xs">
 
+          <DashboardHeader/>
+          <section className="col-xs row row--no-padding">
+            <ConversationsTray
+              conversationItems={this.props.conversationsMeta}
+              openConversation={this.props.openConversation}
+              selectedId={this.props.openedConversationId}/>
 
-        <DashboardHeader/>
-        <section className="col-xs row">
-          <ConversationsTray
-            conversationItems={this.props.conversationsMeta}
-            openConversation={this.props.openConversation}
-            selectedId={this.props.openedConversationId}/>
-
-          { openedConversationUI }
-        </section>
-      </section>
+            { openedConversationUI }
+          </section>
+        </section></div>
     );
   }
 }

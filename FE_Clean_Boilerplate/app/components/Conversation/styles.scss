@@ -1,45 +1,64 @@
 @import "~global-styles/variables";
 
 .conversation-component {
-    margin-top: $margin-s-plus;
+  margin-top: $margin-s-plus;
 
-    .message-row {
-        margin-bottom: 2px;
-        overflow: hidden;
-    }
+  .message-row {
+    margin-bottom: 2px;
+    overflow: hidden;
+  }
 
-    .received {
-        .message {
-            margin-right: $margin-xl-plus;
-            background-color: $primary-grey;
-        }
-    }
-
-    .sent {
-        .message {
-            margin-left: $margin-xl-plus;
-            background-color: $primary-purple;
-            color: $primary-white;
-        }
-    }
-
+  .received {
     .message {
-        max-width: 75%;
-        min-height: 35px;
-        padding: $padding-s-plus;
-        font-size: 15px;
-        line-height: 15px;
-        border-radius: $radius-l $radius-s $radius-m $radius-s;
-        .text {
-            padding-right: 25px;
-        }
-        .time {
-            font-size: 12px;
-            float: right;
-        }
+      margin-right: $margin-xl-plus;
+      background-color: $primary-grey;
+      border-radius: 2px 15px 15px 2px;
     }
 
-    .coversation-messages-container {
-      overflow: auto;
+    & + .sent {
+      margin-top: $margin-m;
+
+      .message {
+        border-radius: 5px 15px 2px;
+      }
     }
+  }
+
+  .sent {
+    .message {
+      margin-left: $margin-xl-plus;
+      background-color: $primary-purple;
+      color: $primary-white;
+      border-radius: 15px 2px 2px 15px;
+    }
+
+    & + .received {
+      margin-top: $margin-m;
+
+      .message {
+        border-radius: 15px 5px 15px 2px;
+      }
+    }
+  }
+
+  .message {
+    max-width: 75%;
+    min-height: 35px;
+    padding: $padding-s-plus;
+    font-size: 15px;
+    line-height: 15px;
+    .text {
+      padding-right: 25px;
+    }
+    .time {
+      font-size: 12px;
+      float: right;
+    }
+  }
+
+  .coversation-messages-container {
+    overflow: auto;
+    padding: 0 $padding-l-plus $padding-m $padding-m;
+    margin-left: $margin-m;
+  }
 }
