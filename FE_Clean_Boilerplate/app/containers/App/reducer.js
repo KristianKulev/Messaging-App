@@ -26,6 +26,7 @@ function appReducer(state = initialState, action) {
 
   switch (action.type) {
     case USER_LOGGED_IN:
+      console.log(action);
       return state = state
         .set('currentUserTokenId', fromJS(action.payload.token.data))
         .set('uiPermissions', fromJS(action.payload.uiPermissions.data));

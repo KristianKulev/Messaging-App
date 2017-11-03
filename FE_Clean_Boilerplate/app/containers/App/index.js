@@ -12,11 +12,12 @@ import { Switch, Route } from 'react-router-dom';
 
 import NotFoundPage from 'containers/NotFoundPage/index';
 import TestPage from 'containers/TestPage/index';
+import DashBoard from 'containers/DashBoard/index';
+
 import Login from 'containers/Login/index';
 import Register from 'containers/Register/index';
 import MainNav from 'containers/MainNav';
-import ReduxToastr from 'react-redux-toastr';
-import FormValidationRules from 'configs/FormValidation.config'; // eslint-disable-line
+import ReduxToastr from 'react-redux-toastr/lib';
 
 import { userIsAuthenticated, userIsNotAuthenticated, userIsAuthenticatedFlag } from 'services/auth.service';
 
@@ -29,10 +30,12 @@ export default class App extends React.Component { // eslint-disable-line react/
   render() {
 
     return (
-      <section>
+      <section className="app-container container column full-height">
         <MainNav userIsAuthenticatedFlag={userIsAuthenticatedFlag()}/>
         <Switch>
           <Route path="/test" component={userIsAuthenticated(TestPage)} />
+          <Route path="/dashboard/:conversationId?" component={userIsAuthenticated(DashBoard)} />
+
           <Route path="/login" component={userIsNotAuthenticated(Login)} />
           <Route path="/register" component={userIsNotAuthenticated(Register)} />
 

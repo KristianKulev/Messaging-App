@@ -11,8 +11,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import Validation from 'react-validation';
-
 import classNames from 'classnames';
 
 import injectSaga from 'utils/injectSaga';
@@ -23,6 +21,8 @@ import saga from './saga';
 
 import Form from 'components/Form';
 
+import { Input } from 'formsy-react-components';
+
 import { makeSelectLogin, makeSelectLoginError } from './selectors';
 import { sendLoginRequest } from './actions';
 
@@ -31,58 +31,65 @@ export class Login extends React.Component { // eslint-disable-line react/prefer
   constructor() {
     super();
     window.l = this;
+
   }
 
-  onSubmit(e) {
-    e.preventDefault();
-
-    const components = this.form.components;
+  onSubmit(data) {
+    console.log(data);
 
     this.props.sendLoginRequest({
-      username: components.username.state.value,
-      password: components.password.state.value,
+      username: data.username,
+      password: data.password,
     });
   }
 
   render() {
     return (
-      <Form className="row center-xs">
-        <Validation.components.Form
-          ref={c => this.form = c}
-          onSubmit={(e, data) => this.onSubmit(e, data)}
-          className="col-xs-6 start-xs">
-          <h3>Login</h3>
-          <section className="form-section">
-            <label htmlFor="username">
-              <span>Username*</span>
-              <Validation.components.Input
-                value=""
-                name="username"
-                validations={['required']}
-                errorClassName="is-invalid-input"/>
-            </label>
-          </section>
-          <section className="form-section">
-            <label htmlFor="password">
-              <span>Password*</span>
-              <Validation.components.Input
-                type="password"
-                value=""
-                name="password"
-                validations={['required']}
-                errorClassName="is-invalid-input"/>
-            </label>
-          </section>
+      <Form onSubmitCallback={data => this.onSubmit(data)} className="login col-xs-6">
+        <h3>Login</h3>
+        <fieldset className="form-section">
+          <Input
+            name="username"
+            value=""
+            label="Username"
+            type="text"
+            placeholder="Username"
+            validations={{
+              minLength: 3,
+            }}
+            validationErrors={{
+              isDefaultRequiredValue: 'Username field is required.',
+              minLength: 'Username should be at least 3 chars in length.',
+            }}
+            required/>
+          <Input
+            name="password"
+            value=""
+            label="Password"
+            type="password"
+            placeholder="Password"
+            validations={{
+              minLength: 3,
+            }}
+            validationErrors={{
+              isDefaultRequiredValue: 'Password field is required.',
+              minLength: 'Password should be at least 3 chars in length.',
+            }}
+            required/>
 
-          <section
-            className={classNames('form-section form-error is-visible',
+        </fieldset>
+        <section
+          className={classNames('form-section form-error is-visible',
             { 'display-none': !this.props.loginError })}>
             loginError
-          </section>
-          <section className="form-section">
-            <Validation.components.Button>Submit</Validation.components.Button>
-          </section>
-        </Validation.components.Form>
+        </section>
+        <fieldset className="form-section">
+
+          <button className="btn btn-primary" formNoValidate>
+            Submit
+          </button>
+
+        </fieldset>
       </Form>
     );
   }

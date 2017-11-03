@@ -1,58 +1,94 @@
+@import "~global-styles/variables";
+
 .form-component {
 
   padding: $padding-xl-plus;
 
   .form-section {
+    margin-bottom: $margin-l;
+  }
+
+  .form-group {
     margin-bottom: $margin-m;
   }
 
-  label {
-    &>span {
-        display: inline-block;
-         margin-bottom: $margin-s;
+  .help-block:not(.validation-message) {
+
+    display: inline-block;
+    margin-top: $margin-s;
+    font-style: italic;
+    opacity: 0.85;
+
+    &:after {
+      display: inline-block;
+      content: '*';
     }
   }
-  input {
+
+  label {
+    display: block;
+    margin-bottom: $margin-s;
+  }
+
+  input:not([type=radio]):not([type=checkbox]):not([type=range]), textarea, select {
     width: 100%;
-    height: 2.4375rem;
+    height: 40px;
+    min-height: 40px;
     padding: $padding-s;
     border: 1px solid $primary-black;
     border-radius: $radius-s;
-    font-size: 1rem;
+    font-size: 16px;
     box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
     transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
   }
-  .is-invalid-input:not(:focus) {
-    background-color: rgba(236, 88, 64, 0.1);
-    border-color: #ec5840;
+
+  input[disabled] {
+    opacity: 0.3;
+  }
+
+  .has-error {
+
+    label {
+      color: $color-error;
+    }
+
+    input, select, textarea {
+        &:not(:focus) {
+
+        background-color: $color-error-background;
+        border-color: $color-error-border !important;
+      }
+    }
   }
 
   button {
     display: inline-block;
-    text-align: center;
-    line-height: 1;
-    cursor: pointer;
-    transition: background-color 0.25s ease-out, color 0.25s ease-out;
-    vertical-align: middle;
+    margin: 0 0 1rem 0;
+    padding: 0.85em 1em;
     border: 1px solid transparent;
     border-radius: 0;
-    padding: 0.85em 1em;
-    margin: 0 0 1rem 0;
-    font-size: 0.9rem;
     background-color: #2199e8;
     color: #fefefe;
+    font-size: 0.9rem;
+    line-height: 1;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  }
 
-    &.disabled, &[disabled] {
-        opacity: 0.25;
-        cursor: not-allowed;
+  .has-error {
+    .validation-message {
+      display: inline-block;
+      margin-top: $margin-m;
+      color: $color-error;
     }
   }
 
-  .form-error {
-    display: inline-block;
-    margin-top: $margin-m;
-    &.is-visible {
-        color: red;
+  &.form-invalid {
+    button {
+      opacity: 0.25;
+      cursor: not-allowed;
     }
   }
 }

@@ -1,6 +1,5 @@
 const UserModel = require('database/models/user.model.js');
-
-let userTryingToLogin;
+const conversationModel = require('database/models/conversation.model.js');
 
 class UserController {
   constructor(userModel) {
@@ -9,6 +8,7 @@ class UserController {
     this.userModel = userModel;
     this.validateNewUniqueUser = this.validateNewUniqueUser.bind(this);
     this.authenticateUser = this.authenticateUser.bind(this);
+    this.getConversationsMeta = this.getConversationsMeta.bind(this);
   }
 
   /* Used for load tests */
@@ -27,7 +27,7 @@ class UserController {
 
     const userCredentials = request.payload;
 
-    const isUsernameUnique = !this.userModel.getUser(userCredentials.username);
+    const isUsernameUnique = !this.userModel.getUserByName(userCredentials.username);
 
     if (isUsernameUnique) {
       // write new user entry to db
@@ -56,8 +56,9 @@ class UserController {
       case 1:
         // Login successful
         reply({
-          authToken: 'some_random_token',
-          uiPermissions: this._getUiPermissionsBasedOnRole()
+          authToken: this.userTryingToLogin.id, //TODO: add real Auth tokens
+          uiPermissions: this._getUiPermissionsBasedOnRole(),
+          username: this.userTryingToLogin.username,
         });
         break;
 
@@ -78,13 +79,13 @@ class UserController {
   _checkAuthStatus(credentials) {
     console.log('creds', credentials);
 
-    userTryingToLogin = this.userModel.getUser(credentials.username);
+    this.userTryingToLogin = this.userModel.getUserByName(credentials.username);
 
     let authStatus = 0;
 
-    if (userTryingToLogin) {
+    if (this.userTryingToLogin) {
 
-      if (userTryingToLogin.password === credentials.password) {
+      if (this.userTryingToLogin.password === credentials.password) {
 
         authStatus = 1;
       } else {
@@ -111,11 +112,20 @@ class UserController {
         return ['basic'];
     }
   }
+
+  getConversationsMeta(request, reply) {
+
+    //TODO: get the id from the token;
+    const userId = request.headers.authorization;
+
+    reply(this.userModel.getUsersConversationsMetaById(userId));
+  }
 }
 
-const userController = new UserController(UserModel);
+var userController = new UserController(UserModel);
 
 module.exports = {
   authenticateUser: userController.authenticateUser,
-  validateNewUniqueUser: userController.validateNewUniqueUser
+  validateNewUniqueUser: userController.validateNewUniqueUser,
+  getConversationsMeta: userController.getConversationsMeta
 };

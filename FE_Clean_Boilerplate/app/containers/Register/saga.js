@@ -4,7 +4,7 @@ import { SEND_REGISTER_REQUEST } from './constants';
 import { registerRequestFail, registerRequestSuccess } from './actions';
 import request from 'utils/request';
 import apiEndpoint from 'configs/CoreConfig.constant';
-import { toastr } from 'react-redux-toastr';
+import { toastr } from 'react-redux-toastr/lib';
 
 export function* sendRegisterRequest(action) {
 

@@ -1,0 +1,11 @@
+@import "~global-styles/variables";
+
+.message-write-box-component {
+  margin: 0;
+  padding: $padding-l $padding-m 0 0;
+  border-top: 1px solid $border-grey;
+
+  label {
+    display: none;
+  }
+}

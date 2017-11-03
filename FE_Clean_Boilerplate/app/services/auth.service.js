@@ -7,7 +7,7 @@ import storageService from './storage.service';
 const userIsNotAuthenticated = connectedRouterRedirect({
   // This sends the user either to the query param route if we have one, or to the
   // landing page if none is specified and the user is already logged in
-  redirectPath: '/test',
+  redirectPath: '/dashboard',
 
   // This prevents us from adding the query parameter when we send the user away
   // from the login page
@@ -49,6 +49,10 @@ const getGlobalStateFromStorage = () => {
   };
 };
 
+const getUsername = () => {
+  return storageService.get('session', 'username');
+};
+
 const userIsAuthenticatedFlag = () => {
   return storageService.exists('session', 'token_id');
 };
@@ -69,6 +73,7 @@ export {
   userIsNotAuthenticated,
   userIsAuthenticated,
   getGlobalStateFromStorage,
+  getUsername,
   userIsAuthenticatedFlag,
   visibleOnlyWhenLoggedIn,
   visibleOnlyAdmin,

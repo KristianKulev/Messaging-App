@@ -23,8 +23,6 @@ module.exports = options => ({
     rules: [
       {
         test: /\.js$/, // Transform all .js files required somewhere with Babel
-        // exclude: [/node_modules/],
-        // include: [/node_modules\/react-redux-toastr/],
         exclude: /node_modules\/(?!(react-redux-toastr)\/).*/,
         use: {
           loader: 'babel-loader',
@@ -39,17 +37,18 @@ module.exports = options => ({
           }, {
             loader: 'css-loader',
             options: {
-              data: '@import "./node_modules/flexboxgrid/css/flexboxgrid.min.css";',
+              sourceMap: true,
             },
-          }, {
+          },
+          {
             loader: 'sass-loader',
             options: {
-              data: '@import "./app/global-styles/global-styles";',
               sourceMap: true,
             },
           },
         ],
-      }, {
+      },
+      {
         // Preprocess 3rd party .css files located in node_modules
         test: /\.css$/,
         include: /node_modules/,

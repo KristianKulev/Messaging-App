@@ -33,6 +33,7 @@ export function* setDataToStorage(action) {
   // set token_id && ui_permissions to storage for future refference
   storageService.set('session', 'token_id', loginData.authToken);
   storageService.set('session', 'ui_permissions', loginData.uiPermissions);
+  storageService.set('session', 'username', loginData.username);
 
   // Fire action to update the store
   yield put(userLoggedIn({

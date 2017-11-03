@@ -1,3 +1,5 @@
+@import "~global-styles/variables";
+
 .header-component {
 
   a {
@@ -21,5 +23,11 @@
       background: #41ADDD;
       color: #FFF;
     }
+  }
+
+  .logout-btn {
+    padding: $padding-s-plus;
+    border: 1px solid $border-grey;
+    margin: 0 $margin-s-plus;
   }
 }

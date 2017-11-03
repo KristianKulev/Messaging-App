@@ -1,40 +1,51 @@
-const db = require('database/configs/db.config.js').db;
+const usersDb = require('database/configs/usersTable.db.config.js').db;
+
 const shortid = require('shortid');
 
 class UserModel {
 
-  constructor(db, idGenerator) {
+  constructor(usersDb, idGenerator) {
 
-    this.db = db;
+    this.usersDb = usersDb;
     this.idGenerator = idGenerator;
 
-    this.getUser = this.getUser.bind(this);
+    this.getUserByName = this.getUserByName.bind(this);
+    this.getUsersConversationsMetaById = this.getUsersConversationsMetaById.bind(this);
     this.addNewUser = this.addNewUser.bind(this);
   }
 
-  getUser(username, callback) {
+  getUserByName(username, callback) {
 
-    return this.db.get('users')
+    return this.usersDb.get('users')
       .find({ username: username })
       .value();
   };
 
+  getUsersConversationsMetaById(userId, callback) {
+
+    return this.usersDb.get('users')
+      .find({ id: userId })
+      .value().activeConversationsMeta;
+  };
+
   addNewUser(credentials, role, callback) {
 
-    return this.db.get('users')
+    return this.usersDb.get('users')
       .push({
         id: this.idGenerator.generate(),
         username: credentials.username,
         password: credentials.password,
-        role: role ? role : 'basic'
+        role: role ? role : 'basic',
+        activeConversationsMeta: []
       })
       .write();
   };
 }
 
-const userModel = new UserModel(db, shortid);
+const userModel = new UserModel(usersDb, shortid);
 
 module.exports = {
-  getUser: userModel.getUser,
+  getUserByName: userModel.getUserByName,
+  getUsersConversationsMetaById: userModel.getUsersConversationsMetaById,
   addNewUser: userModel.addNewUser
 };
