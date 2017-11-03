@@ -1,3 +1,5 @@
+@import "~global-styles/variables";
+
 .form-component {
 
   padding: $padding-xl-plus;
@@ -30,11 +32,12 @@
 
   input:not([type=radio]):not([type=checkbox]):not([type=range]), textarea, select {
     width: 100%;
-    height: 2.4375rem;
+    height: 40px;
+    min-height: 40px;
     padding: $padding-s;
     border: 1px solid $primary-black;
     border-radius: $radius-s;
-    font-size: 1rem;
+    font-size: 16px;
     box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
     transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
   }
