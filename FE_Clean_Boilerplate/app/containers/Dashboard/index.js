@@ -95,6 +95,12 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
     });
   }
 
+  findUserByName(username) {
+    console.log(username);
+
+    // Fire action to send a POST /search-for-user; payload: { username: 'name' }
+  }
+
   render() {
 
     const openedConversationUI = this.props.openedConversationId ?

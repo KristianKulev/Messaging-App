@@ -14,6 +14,7 @@ class App {
 
   setupRoutes() {
 
+    // Register && Login
     this.server.route({
       method: 'POST',
       path: '/login',
@@ -32,6 +33,8 @@ class App {
       }
     });
 
+
+    // Conversation specific
     this.server.route({
       method: 'GET',
       path: '/conversations',
@@ -50,24 +53,6 @@ class App {
       // }
     });
 
-    // TODO: use later to get chat history with WS instead of http
-    this.server.route({
-      method: 'GET',
-      path: '/test',
-      config: {
-        description: 'Get chat history',
-        handler: (request, reply) => {
-          console.log(';vliza w handelr;')
-
-          return reply({test: 'hoi'});
-          const roomId = request.params.id ? request.params.id : 'public';
-          const chatHistory = chatrooms[roomId] ? chatrooms[roomId].messages : [{message: 'You are the first here!'}];
-          return reply(chatHistory);
-        }
-      }
-    });
-
-
     this.server.route({
       method: 'POST',
       path: '/new-message/{id*}',
@@ -83,6 +68,18 @@ class App {
         }
       }
     });
+
+
+    // Search and add friends specific
+    this.server.route({
+      method: 'POST',
+      path: '/search-for-user',
+      handler: require('modules/user/user.controller').findUserByName,
+      // config: {
+      //   validate: require('modules/user/user.validator').authenticateUser
+      // }
+    });
+
   }
 
   setConfig() {

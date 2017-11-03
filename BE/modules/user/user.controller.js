@@ -120,6 +120,11 @@ class UserController {
 
     reply(this.userModel.getUsersConversationsMetaById(userId));
   }
+
+  findUserByName(request, reply) {
+
+    reply(this.userModel.getUserByName(request.payload.username));
+  }
 }
 
 var userController = new UserController(UserModel);
@@ -127,5 +132,6 @@ var userController = new UserController(UserModel);
 module.exports = {
   authenticateUser: userController.authenticateUser,
   validateNewUniqueUser: userController.validateNewUniqueUser,
-  getConversationsMeta: userController.getConversationsMeta
+  getConversationsMeta: userController.getConversationsMeta,
+  findUserByName: userController.findUserByName
 };
