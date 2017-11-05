@@ -26,6 +26,8 @@ import {
   cancelSubscriptionsById,
   initSubscriptionWithId,
   handleNewMessage,
+  searchForUser,
+  startNewConversationWithUser,
 } from './actions';
 
 import reducer from './reducer';
@@ -95,10 +97,21 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
     });
   }
 
-  findUserByName(username) {
-    console.log(username);
+  findUserByName() {
+    this.usernameToFind = 'admin';
+    console.log(this.usernameToFind);
 
+
+    this.props.searchForUser(this.usernameToFind);
     // Fire action to send a POST /search-for-user; payload: { username: 'name' }
+  }
+
+  startNewConversation() {
+
+    console.log(this.usernameToFind);
+
+
+    this.props.startNewConversationWithUser(this.usernameToFind);
   }
 
   render() {
@@ -108,21 +121,22 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
         <Conversation
           openedConversation={this.props.openedConversationData}
           userId={this.props.userId}
-          onMessageSubmit={msgText => this.onMessageSubmit(msgText)}/>
+          onMessageSubmit={msgText => this.onMessageSubmit(msgText)} />
       ) : <h3>Welcome, select a chat and start a conversation!</h3>;
 
     return (
       <div className="row row--no-padding col-xs">
         <section className="column column--no-padding col-xs">
-
-          <DashboardHeader/>
+          <h1 onClick={() => this.findUserByName()}>findUserByName test</h1>
+          <h1 onClick={() => this.startNewConversation()}>startNewConversation test</h1>
+          <DashboardHeader />
           <section className="col-xs row row--no-padding">
             <ConversationsTray
               conversationItems={this.props.conversationsMeta}
               openConversation={this.props.openConversation}
-              selectedId={this.props.openedConversationId}/>
+              selectedId={this.props.openedConversationId} />
 
-            { openedConversationUI }
+            {openedConversationUI}
           </section>
         </section></div>
     );
@@ -140,6 +154,8 @@ Dashboard.propTypes = {
   openedConversationId: PropTypes.string,
   userId: PropTypes.string,
   match: PropTypes.object,
+  searchForUser: PropTypes.func.isRequired,
+  startNewConversationWithUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -156,6 +172,8 @@ function mapDispatchToProps(dispatch) {
     cancelSubscriptionsById: id => dispatch(cancelSubscriptionsById(id)),
     initSubscriptionWithId: id => dispatch(initSubscriptionWithId(id)),
     handleNewMessage: msgData => dispatch(handleNewMessage(msgData)),
+    searchForUser: username => dispatch(searchForUser(username)),
+    startNewConversationWithUser: username => dispatch(startNewConversationWithUser(username)),
   };
 }
 

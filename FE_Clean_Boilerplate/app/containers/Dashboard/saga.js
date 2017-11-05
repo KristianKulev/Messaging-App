@@ -1,14 +1,18 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 
-import { OPEN_CONVERSATION, SEND_NEW_MESSAGE, CANCEL_SUBSCRIPTIONS_BY_ID, INIT_SUBSCRIPTION_WITH_ID } from './constants';
+import { OPEN_CONVERSATION, SEND_NEW_MESSAGE, CANCEL_SUBSCRIPTIONS_BY_ID, INIT_SUBSCRIPTION_WITH_ID, SEARCH_FOR_USER, START_NEW_CONVERSATION_WITH_USER } from './constants';
 import {
   getConversationsRequestFail,
   getConversationsRequestSuccess,
   getConversationDetailsSuccess,
+  searchForUserResult,
+  startNewConversationWithUserResult,
 } from './actions';
 import request from 'utils/request';
 import { websocketClient } from 'utils/websocketRequest';
+
+import { getUsername } from 'services/auth.service';
 
 import apiEndpoint from 'configs/CoreConfig.constant';
 
@@ -116,5 +120,59 @@ export default function* watchAndManageGetConversationsRequests() {
    * Wathes for CANCEL_SUBSCRIPTIONS_BY_ID, when a conversation is closed
    */
   yield takeLatest(CANCEL_SUBSCRIPTIONS_BY_ID, cancelMessageSubscriptions);
+
+  /**
+   * Wathes for SEARCH_FOR_USER, when a user wants to find a friend
+   */
+  yield takeLatest(SEARCH_FOR_USER, searchForUser);
+
+  /**
+   * Wathes for START_NEW_CONVERSATION_WITH_USER, when a user wants to find a friend
+   */
+  yield takeLatest(START_NEW_CONVERSATION_WITH_USER, startNewConvesationWithUser);
 }
 
+export function* searchForUser(action) {
+
+  const requestURL = `${apiEndpoint}/search-for-user`;
+
+  try {
+    // login successful; fire action to setLoggedUserdataToStorage
+    const foundUserData = yield call(request, requestURL, {
+      method: 'POST',
+      body: JSON.stringify({ username: action.data }),
+      responseType: 'application/json',
+      // contentType: 'application/json',
+    });
+
+    yield put(searchForUserResult(foundUserData));
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* startNewConvesationWithUser(action) {
+
+  const requestURL = `${apiEndpoint}/start-new-conversation-with-user`;
+
+  const payload = {
+    usernameToStartWith: action.data,
+    usernameMakingTheRequest: getUsername(), // auth.service
+  };
+
+  try {
+    // login successful; fire action to setLoggedUserdataToStorage
+    const newConversationData = yield call(request, requestURL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+      responseType: 'application/json',
+      // contentType: 'application/json',
+    });
+
+    yield put(startNewConversationWithUserResult(newConversationData));
+
+  } catch (err) {
+    console.log(err);
+  }
+}

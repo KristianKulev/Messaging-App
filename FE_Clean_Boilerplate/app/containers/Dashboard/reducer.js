@@ -10,6 +10,7 @@ import {
   GET_CONVERSATIONS_SUCCESS,
   GET_CONVERSATION_DETAILS_SUCCESS,
   HANDLE_NEW_MESSAGE,
+  START_NEW_CONVERSATION_WITH_USER_RESULT,
 } from './constants';
 
 const initialState = fromJS({
@@ -41,6 +42,13 @@ function dashboardReducer(state = initialState, action) {
           messages: currentState.messages.concat(action.data),
         });
     }
+
+    case START_NEW_CONVERSATION_WITH_USER_RESULT: {
+      const currentOpenedConversations = state.get('conversationsMeta');
+
+      return state = state.set('conversationsMeta', currentOpenedConversations.concat(action.data));
+    }
+
     default:
       return state;
   }
