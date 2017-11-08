@@ -80,6 +80,16 @@ class App {
       // }
     });
 
+    this.server.route({
+      method: 'POST',
+      path: '/start-new-conversation-with-user',
+      handler: require('modules/user/user.controller').startNewConversationWithUser,
+      // config: {
+      //   validate: require('modules/user/user.validator').authenticateUser
+      // }
+    });
+
+
   }
 
   setConfig() {

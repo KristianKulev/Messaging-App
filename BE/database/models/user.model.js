@@ -12,6 +12,7 @@ class UserModel {
     this.getUserByName = this.getUserByName.bind(this);
     this.getUsersConversationsMetaById = this.getUsersConversationsMetaById.bind(this);
     this.addNewUser = this.addNewUser.bind(this);
+    this.addNewConversationForUser = this.addNewConversationForUser.bind(this);
   }
 
   getUserByName(username, callback) {
@@ -40,6 +41,18 @@ class UserModel {
       })
       .write();
   };
+
+  addNewConversationForUser(username, conversationId) {
+
+    return this.usersDb.get('users')
+      .find({ username: username })
+      .get('activeConversationsMeta')
+      .push({
+        id: conversationId,
+      })
+      .write();
+  };
+
 }
 
 const userModel = new UserModel(usersDb, shortid);
@@ -47,5 +60,6 @@ const userModel = new UserModel(usersDb, shortid);
 module.exports = {
   getUserByName: userModel.getUserByName,
   getUsersConversationsMetaById: userModel.getUsersConversationsMetaById,
-  addNewUser: userModel.addNewUser
+  addNewUser: userModel.addNewUser,
+  addNewConversationForUser: userModel.addNewConversationForUser
 };

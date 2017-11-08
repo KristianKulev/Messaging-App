@@ -1,14 +1,17 @@
 const UserModel = require('database/models/user.model.js');
-const conversationModel = require('database/models/conversation.model.js');
+const ConversationModel = require('database/models/conversation.model.js');
 
 class UserController {
-  constructor(userModel) {
+  constructor(userModel, conversationModel) {
 
     this.userTryingToLogin = false;
     this.userModel = userModel;
+    this.conversationModel = conversationModel;
     this.validateNewUniqueUser = this.validateNewUniqueUser.bind(this);
     this.authenticateUser = this.authenticateUser.bind(this);
     this.getConversationsMeta = this.getConversationsMeta.bind(this);
+    this.findUserByName = this.findUserByName.bind(this);
+    this.startNewConversationWithUser = this.startNewConversationWithUser.bind(this);
   }
 
   /* Used for load tests */
@@ -40,7 +43,7 @@ class UserController {
     } else {
       // Register unsuccessful; username is taken
       reply({ error: 'This username is taken!' })
-      .code(409);
+        .code(409);
     }
   }
 
@@ -51,7 +54,7 @@ class UserController {
 
     const requestAuthStatus = this._checkAuthStatus(userCredentials);
 
-    switch(requestAuthStatus) {
+    switch (requestAuthStatus) {
 
       case 1:
         // Login successful
@@ -93,7 +96,7 @@ class UserController {
         authStatus = 2;
       }
     }
-    console.log('authStatus',authStatus)
+    console.log('authStatus', authStatus)
     return authStatus;
   }
 
@@ -101,15 +104,15 @@ class UserController {
 
     const role = this.userTryingToLogin.role;
 
-    switch(role) {
+    switch (role) {
 
       case 'admin':
-        return ['admin'];
+        return [ 'admin' ];
 
       case 'basic':
-        return ['basic'];
+        return [ 'basic' ];
       default:
-        return ['basic'];
+        return [ 'basic' ];
     }
   }
 
@@ -123,15 +126,35 @@ class UserController {
 
   findUserByName(request, reply) {
 
-    reply(this.userModel.getUserByName(request.payload.username));
+    let parsedUsername = JSON.parse(request.payload).username;
+
+    reply(this.userModel.getUserByName(parsedUsername));
+  }
+
+  startNewConversationWithUser(request, reply) {
+
+    let parsedPayload = JSON.parse(request.payload);
+
+    const usernameToStartWith = parsedPayload.usernameToStartWith;
+    const usernameMakingTheRequest = parsedPayload.usernameMakingTheRequest;
+
+    //make a new conversation entry to conversationsDB
+    const newlyStartedConversationId = this.conversationModel.startNewConversation();
+
+    // write a new conversation entry ID to usernameToStartWith and to the user, sending the request
+    this.userModel.addNewConversationForUser(usernameMakingTheRequest, newlyStartedConversationId);
+    this.userModel.addNewConversationForUser(usernameToStartWith, newlyStartedConversationId);
+
+    reply({newlyStartedConversationId: newlyStartedConversationId});
   }
 }
 
-var userController = new UserController(UserModel);
+var userController = new UserController(UserModel, ConversationModel);
 
 module.exports = {
   authenticateUser: userController.authenticateUser,
   validateNewUniqueUser: userController.validateNewUniqueUser,
   getConversationsMeta: userController.getConversationsMeta,
-  findUserByName: userController.findUserByName
+  findUserByName: userController.findUserByName,
+  startNewConversationWithUser: userController.startNewConversationWithUser
 };
