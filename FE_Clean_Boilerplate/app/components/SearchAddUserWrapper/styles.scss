@@ -1,0 +1,24 @@
+@import "~global-styles/variables";
+
+.search-add-user-wrapper-component {
+    /* Styles go here */
+
+    section {
+      max-height: 50px;
+      height: 50px;
+      form {
+        padding: 10px;
+        label {
+          display: none;
+        }
+
+        .form-group {
+          margin-bottom: 0;
+        }
+
+        button {
+          margin-bottom: 0;
+        }
+      }
+    }
+}

@@ -34,19 +34,24 @@ class ConversationModel {
       .write();
   };
 
-  startNewConversation() {
+  startNewConversation(participents) {
 
     // generate new conversation record
-    const newConversationId = this.idGenerator.generate();
+    const newConversationData = {
+      conversationId: this.idGenerator.generate(),
+      conversationName: participents.join(', ') // generate the name
+    };
+
+    const newConversationModel = {
+      ...newConversationData,
+      messages: []
+    };
 
     this.conversationsDb.get('conversations')
-      .push({
-        conversationId: newConversationId,
-        messages: []
-      })
+      .push(newConversationModel)
       .write();
 
-    return newConversationId;
+    return newConversationData;
 
   };
 }

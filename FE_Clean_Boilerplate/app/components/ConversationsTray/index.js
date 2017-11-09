@@ -16,11 +16,11 @@ class ConversationsTray extends React.Component { // eslint-disable-line react/p
   }
 
 
-  triggerOpenConversation(isConversationOpened, id) {
+  triggerOpenConversation(isConversationOpened, conversationId) {
 
     if (isConversationOpened) return;
 
-    this.props.openConversation(id);
+    this.props.openConversation(conversationId);
   }
 
   render() {
@@ -29,15 +29,15 @@ class ConversationsTray extends React.Component { // eslint-disable-line react/p
 
     const conversationItems = this.props.conversationItems.map((item, i) => {
 
-      const isConversationOpened = this.props.selectedId && item.id === this.props.selectedId;
+      const isConversationOpened = this.props.selectedId && item.conversationId === this.props.selectedId;
 
       return (
         <li
           key={i}
           className={`row ${isConversationOpened ? 'is-selected' : ''}`}
-          onClick={() => this.triggerOpenConversation(isConversationOpened, item.id)}>
+          onClick={() => this.triggerOpenConversation(isConversationOpened, item.conversationId)}>
           <p>
-            <span className="img">img </span>{item.id}
+            <span className="img">img </span>{item.conversationName}
           </p>
         </li>
       );
@@ -45,11 +45,12 @@ class ConversationsTray extends React.Component { // eslint-disable-line react/p
 
 
     return (
-      <aside className="conversations-tray-component column col-xs-5">
-
-        <ul className="column col-xs coversations-tray">
-          {conversationItems}
-        </ul>
+      <aside className="conversations-tray-component column col-xs column--no-padding">
+        <section className="row row--no-margin">
+          <ul className="column col-xs coversations-tray">
+            {conversationItems}
+          </ul>
+        </section>
       </aside>
     );
   }

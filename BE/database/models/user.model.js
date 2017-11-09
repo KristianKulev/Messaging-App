@@ -13,6 +13,7 @@ class UserModel {
     this.getUsersConversationsMetaById = this.getUsersConversationsMetaById.bind(this);
     this.addNewUser = this.addNewUser.bind(this);
     this.addNewConversationForUser = this.addNewConversationForUser.bind(this);
+    this.getUserByNameShortInfo = this.getUserByNameShortInfo.bind(this);
   }
 
   getUserByName(username, callback) {
@@ -20,6 +21,20 @@ class UserModel {
     return this.usersDb.get('users')
       .find({ username: username })
       .value();
+  };
+
+  getUserByNameShortInfo(username, callback) {
+
+    const foundUser = this.usersDb.get('users')
+      .find({ username: username })
+      .value();
+
+    const shortInfoModel = {
+      id: foundUser.id,
+      username: foundUser.username
+    };
+
+    return shortInfoModel;
   };
 
   getUsersConversationsMetaById(userId, callback) {
@@ -42,14 +57,12 @@ class UserModel {
       .write();
   };
 
-  addNewConversationForUser(username, conversationId) {
+  addNewConversationForUser(username, newConversationData) {
 
     return this.usersDb.get('users')
       .find({ username: username })
       .get('activeConversationsMeta')
-      .push({
-        id: conversationId,
-      })
+      .push(newConversationData)
       .write();
   };
 
@@ -61,5 +74,6 @@ module.exports = {
   getUserByName: userModel.getUserByName,
   getUsersConversationsMetaById: userModel.getUsersConversationsMetaById,
   addNewUser: userModel.addNewUser,
-  addNewConversationForUser: userModel.addNewConversationForUser
+  addNewConversationForUser: userModel.addNewConversationForUser,
+  getUserByNameShortInfo: userModel.getUserByNameShortInfo
 };

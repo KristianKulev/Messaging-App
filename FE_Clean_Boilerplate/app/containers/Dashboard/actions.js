@@ -14,9 +14,6 @@ import {
   HANDLE_NEW_MESSAGE,
   CANCEL_SUBSCRIPTIONS_BY_ID,
   INIT_SUBSCRIPTION_WITH_ID,
-  SEARCH_FOR_USER,
-  SEARCH_FOR_USER_RESULT,
-  START_NEW_CONVERSATION_WITH_USER,
   START_NEW_CONVERSATION_WITH_USER_RESULT,
 } from './constants';
 
@@ -85,37 +82,11 @@ export function initSubscriptionWithId(data) {
   };
 }
 
-export function searchForUser(data) {
-
-  return {
-    type: SEARCH_FOR_USER,
-    data,
-  };
-}
-
-export function searchForUserResult(data) {
-
-  return {
-    type: SEARCH_FOR_USER_RESULT,
-    data,
-  };
-}
-
-export function startNewConversationWithUser(data) {
-
-  return {
-    type: START_NEW_CONVERSATION_WITH_USER,
-    data,
-  };
-}
-
 export function startNewConversationWithUserResult(data) {
 
   return {
     type: START_NEW_CONVERSATION_WITH_USER_RESULT,
-    data: {
-      id: data.newlyStartedConversationId,
-    },
+    data,
   };
 }
 

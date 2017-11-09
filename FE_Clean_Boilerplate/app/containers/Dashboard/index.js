@@ -26,8 +26,8 @@ import {
   cancelSubscriptionsById,
   initSubscriptionWithId,
   handleNewMessage,
-  searchForUser,
-  startNewConversationWithUser,
+  // searchForUser,
+  // startNewConversationWithUser,
 } from './actions';
 
 import reducer from './reducer';
@@ -36,6 +36,7 @@ import saga from './saga';
 import DashboardHeader from 'components/DashboardHeader';
 import ConversationsTray from 'components/ConversationsTray';
 import Conversation from 'components/Conversation';
+import SearchAddUserWrapper from 'components/SearchAddUserWrapper';
 
 export class Dashboard extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -97,22 +98,25 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
     });
   }
 
-  findUserByName() {
-    this.usernameToFind = 'admin';
-    console.log(this.usernameToFind);
+  // findUserByName(data) {
+  //   this.usernameToFind = data.usernameToFind;
+  //   console.log(data);
 
 
-    this.props.searchForUser(this.usernameToFind);
-    // Fire action to send a POST /search-for-user; payload: { username: 'name' }
-  }
+  //   this.props.searchForUser(this.usernameToFind);
+  //   // Fire action to send a POST /search-for-user; payload: { username: 'name' }
+  // }
 
-  startNewConversation() {
+  // startNewConversation() {
 
-    console.log(this.usernameToFind);
+  //   console.log(this.usernameToFind);
 
+  //   if (!this.usernameToFind) return;
 
-    this.props.startNewConversationWithUser(this.usernameToFind);
-  }
+  //   this.props.startNewConversationWithUser(this.usernameToFind);
+
+  //   this.usernameToFind = '';
+  // }
 
   render() {
 
@@ -127,15 +131,16 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
     return (
       <div className="row row--no-padding col-xs">
         <section className="column column--no-padding col-xs">
-          <h1 onClick={() => this.findUserByName()}>findUserByName test</h1>
-          <h1 onClick={() => this.startNewConversation()}>startNewConversation test</h1>
           <DashboardHeader />
           <section className="col-xs row row--no-padding">
-            <ConversationsTray
-              conversationItems={this.props.conversationsMeta}
-              openConversation={this.props.openConversation}
-              selectedId={this.props.openedConversationId} />
+            <aside className="column col-xs-5">
 
+              <SearchAddUserWrapper/>
+              <ConversationsTray
+                conversationItems={this.props.conversationsMeta}
+                openConversation={this.props.openConversation}
+                selectedId={this.props.openedConversationId} />
+            </aside>
             {openedConversationUI}
           </section>
         </section></div>
@@ -154,8 +159,8 @@ Dashboard.propTypes = {
   openedConversationId: PropTypes.string,
   userId: PropTypes.string,
   match: PropTypes.object,
-  searchForUser: PropTypes.func.isRequired,
-  startNewConversationWithUser: PropTypes.func.isRequired,
+  // searchForUser: PropTypes.func.isRequired,
+  // startNewConversationWithUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -172,8 +177,8 @@ function mapDispatchToProps(dispatch) {
     cancelSubscriptionsById: id => dispatch(cancelSubscriptionsById(id)),
     initSubscriptionWithId: id => dispatch(initSubscriptionWithId(id)),
     handleNewMessage: msgData => dispatch(handleNewMessage(msgData)),
-    searchForUser: username => dispatch(searchForUser(username)),
-    startNewConversationWithUser: username => dispatch(startNewConversationWithUser(username)),
+    // searchForUser: username => dispatch(searchForUser(username)),
+    // startNewConversationWithUser: username => dispatch(startNewConversationWithUser(username)),
   };
 }
 

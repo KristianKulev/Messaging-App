@@ -11,12 +11,12 @@ class ConversationController {
 
   getConversationDetails(request, reply) {
     const conversation = request.params.id;
-
+console.log(111, conversation)
     reply(this.conversationModel.getConversationHistory(conversation));
   }
 
   sendNewMessage(request, reply) {
-    const conversationId = request.params.id;
+    // const conversationId = request.params.id;
 
     // get the model and call its add function to update the DB, then reply success
     this.conversationModel.addNewMessageToConversation(request.payload);

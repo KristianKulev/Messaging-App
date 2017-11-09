@@ -45,7 +45,7 @@ function dashboardReducer(state = initialState, action) {
 
     case START_NEW_CONVERSATION_WITH_USER_RESULT: {
       const currentOpenedConversations = state.get('conversationsMeta');
-
+      console.log(currentOpenedConversations, action.data);
       return state = state.set('conversationsMeta', currentOpenedConversations.concat(action.data));
     }
 

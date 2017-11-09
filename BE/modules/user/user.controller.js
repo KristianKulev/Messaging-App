@@ -128,7 +128,7 @@ class UserController {
 
     let parsedUsername = JSON.parse(request.payload).username;
 
-    reply(this.userModel.getUserByName(parsedUsername));
+    reply(this.userModel.getUserByNameShortInfo(parsedUsername));
   }
 
   startNewConversationWithUser(request, reply) {
@@ -139,13 +139,13 @@ class UserController {
     const usernameMakingTheRequest = parsedPayload.usernameMakingTheRequest;
 
     //make a new conversation entry to conversationsDB
-    const newlyStartedConversationId = this.conversationModel.startNewConversation();
+    const newConversationData = this.conversationModel.startNewConversation([usernameMakingTheRequest, usernameToStartWith]);
 
     // write a new conversation entry ID to usernameToStartWith and to the user, sending the request
-    this.userModel.addNewConversationForUser(usernameMakingTheRequest, newlyStartedConversationId);
-    this.userModel.addNewConversationForUser(usernameToStartWith, newlyStartedConversationId);
+    this.userModel.addNewConversationForUser(usernameMakingTheRequest, newConversationData);
+    this.userModel.addNewConversationForUser(usernameToStartWith, newConversationData);
 
-    reply({newlyStartedConversationId: newlyStartedConversationId});
+    reply(newConversationData);
   }
 }
 
