@@ -14,6 +14,7 @@ import {
   HANDLE_NEW_MESSAGE,
   CANCEL_SUBSCRIPTIONS_BY_ID,
   INIT_SUBSCRIPTION_WITH_ID,
+  START_NEW_CONVERSATION_WITH_USER_RESULT,
 } from './constants';
 
 export function getConversations() {
@@ -77,6 +78,14 @@ export function initSubscriptionWithId(data) {
 
   return {
     type: INIT_SUBSCRIPTION_WITH_ID,
+    data,
+  };
+}
+
+export function startNewConversationWithUserResult(data) {
+
+  return {
+    type: START_NEW_CONVERSATION_WITH_USER_RESULT,
     data,
   };
 }

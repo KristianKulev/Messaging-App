@@ -7,24 +7,16 @@
       "role": "admin",
       "activeConversationsMeta": [
         {
-          "id": "admin-tester-conversation",
-          "participenIds": [
-            "id_one"
-          ]
-        }
-      ]
-    },
-    {
-      "id": "asdUdsX226Z",
-      "username": "basic",
-      "password": "pass",
-      "role": "basic",
-      "activeConversationsMeta": [
+          "conversationId": "BJuhvyzyG",
+          "conversationName": "tester, admin"
+        },
         {
-          "id": "someConversationId",
-          "participenIds": [
-            "id_one"
-          ]
+          "conversationId": "BJPpkefyz",
+          "conversationName": "tester, admin"
+        },
+        {
+          "conversationId": "S1PpexzyM",
+          "conversationName": "tester, admin"
         }
       ]
     },
@@ -35,51 +27,23 @@
       "role": "basic",
       "activeConversationsMeta": [
         {
-          "id": "admin-tester-conversation",
-          "participenIds": [
-            "id_one"
-          ]
+          "conversationId": "BJuhvyzyG",
+          "conversationName": "tester, admin"
         },
         {
-          "id": "anotherConversationId",
-          "participenIds": [
-            "id_one"
-          ]
+          "conversationId": "BJPpkefyz",
+          "conversationName": "tester, admin"
+        },
+        {
+          "conversationId": "S1PpexzyM",
+          "conversationName": "tester, admin"
         }
       ]
     },
     {
-      "id": "H17c5vDaW",
-      "username": "ddd",
-      "password": "ddd",
-      "role": "basic",
-      "activeConversationsMeta": []
-    },
-    {
-      "id": "HyT5WoDTZ",
-      "username": "eee",
-      "password": "eee",
-      "role": "basic",
-      "activeConversationsMeta": []
-    },
-    {
-      "id": "SJzjvmwCb",
-      "username": "qwe",
-      "password": "qwe",
-      "role": "basic",
-      "activeConversationsMeta": []
-    },
-    {
-      "id": "HJfTwLvAb",
-      "username": "rer",
-      "password": "rer",
-      "role": "basic",
-      "activeConversationsMeta": []
-    },
-    {
-      "id": "rkMP9PD0b",
-      "username": "dsa",
-      "password": "dsa",
+      "id": "asdUdsX226Z",
+      "username": "basic",
+      "password": "pass",
       "role": "basic",
       "activeConversationsMeta": []
     }

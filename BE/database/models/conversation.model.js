@@ -11,6 +11,7 @@ class ConversationModel {
 
     this.getConversationHistory = this.getConversationHistory.bind(this);
     this.addNewMessageToConversation = this.addNewMessageToConversation.bind(this);
+    this.startNewConversation = this.startNewConversation.bind(this);
   }
 
   getConversationHistory(conversationId, callback) {
@@ -32,11 +33,33 @@ class ConversationModel {
       })
       .write();
   };
+
+  startNewConversation(participents) {
+
+    // generate new conversation record
+    const newConversationData = {
+      conversationId: this.idGenerator.generate(),
+      conversationName: participents.join(', ') // generate the name
+    };
+
+    const newConversationModel = {
+      ...newConversationData,
+      messages: []
+    };
+
+    this.conversationsDb.get('conversations')
+      .push(newConversationModel)
+      .write();
+
+    return newConversationData;
+
+  };
 }
 
 const conversationModel = new ConversationModel(conversationsDb, shortid);
 
 module.exports = {
   getConversationHistory: conversationModel.getConversationHistory,
-  addNewMessageToConversation: conversationModel.addNewMessageToConversation
+  addNewMessageToConversation: conversationModel.addNewMessageToConversation,
+  startNewConversation: conversationModel.startNewConversation
 };

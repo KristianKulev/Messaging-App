@@ -1,36 +1,37 @@
 /**
 *
-* MessageWriteBox
+* UserSearchBox
 *
 */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Input } from 'formsy-react-components';
-import Form from 'components/Form';
 import './styles.scss';
 
-class MessageWriteBox extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+import { Input } from 'formsy-react-components';
+import Form from 'components/Form';
 
-  cleanMessageBox() {
+class UserSearchBox extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
 
-    this.formInstance.reset({ messageText: '' });
+  cleanInputBox() {
+
+    this.formInstance.reset({ usernameToFind: '' });
 
     return this;
   }
 
-  focusInput() {
+  focusSearchInput() {
 
     this.textareaRef.element.focus();
   }
 
-  submitMsg(data) {
+  submitUsername(data) {
     this.props.onSubmitCallback(data);
 
     this
-      .cleanMessageBox()
-      .focusInput();
+      .cleanInputBox()
+      .focusSearchInput();
   }
 
   render() {
@@ -38,15 +39,15 @@ class MessageWriteBox extends React.PureComponent { // eslint-disable-line react
 
     return (
       <Form
-        onSubmitCallback={data => this.submitMsg(data)}
+        onSubmitCallback={data => this.submitUsername(data)}
         ref={(formRef) => {
           this.formInstance = formRef;
         }}
-        className="row message-write-box-component">
+        className="row row--trim-padding user-search-box-component">
         <Input
           rowClassName="col-xs"
-          name="messageText"
-          placeholder="Write a message"
+          name="usernameToFind"
+          placeholder="Search for user"
           validations="minLength:1"
           validationErrors={{}}
           value={''}
@@ -56,15 +57,15 @@ class MessageWriteBox extends React.PureComponent { // eslint-disable-line react
           }} />
 
         <button className="" formNoValidate>
-          Send
+          Find
         </button>
       </Form>
     );
   }
 }
 
-MessageWriteBox.propTypes = {
-  onSubmitCallback: PropTypes.func.isRequired,
+UserSearchBox.propTypes = {
+  onSubmitCallback: PropTypes.func,
 };
 
-export default MessageWriteBox;
+export default UserSearchBox;

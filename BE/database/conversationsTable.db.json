@@ -1,89 +1,19 @@
 {
   "conversations": [
     {
-      "conversationId": "admin-tester-conversation",
-      "messages": [
-        {
-          "senderId": "B1UgXL76Z",
-          "sentAt": "1/1/21",
-          "data": "hello, I am admin"
-        },
-        {
-          "senderId": "B1UgXL76Z",
-          "sentAt": "1/1/21",
-          "data": "gey"
-        },
-        {
-          "senderId": "B1UgXL76Z",
-          "sentAt": "1/1/21",
-          "data": "volen"
-        },
-        {
-          "senderId": "BkhuQjXpZ",
-          "sentAt": "1/1/21",
-          "data": "hi to you too, I am tester!"
-        },
-        {
-          "senderId": "BkhuQjXpZ",
-          "sentAt": "1/1/22",
-          "data": "kek dela?"
-        },
-        {
-          "senderId": "B1UgXL76Z",
-          "sentAt": "2017-10-26T14:05:00.628Z",
-          "data": "another hi!"
-        },
-        {
-          "senderId": "B1UgXL76Z",
-          "sentAt": "2017-10-26T14:05:32.979Z",
-          "data": "another hi!"
-        },
-        {
-          "senderId": "BkhuQjXpZ",
-          "sentAt": "2017-10-26T14:05:57.066Z",
-          "data": "another hi!"
-        },
-        {
-          "senderId": "B1UgXL76Z",
-          "sentAt": "2017-10-26T14:05:59.634Z",
-          "data": "another hi!"
-        }
-      ]
+      "conversationId": "BJuhvyzyG",
+      "conversationName": "tester, admin",
+      "messages": []
     },
     {
-      "conversationId": "anotherConversationId",
-      "messages": [
-        {
-          "senderId": "BkhuQjXpZ",
-          "sentAt": "3/1/21",
-          "data": "another hello"
-        },
-        {
-          "senderId": "BkhuQjXpZ",
-          "sentAt": "2017-10-26T12:08:46.348Z",
-          "data": "another hi!"
-        },
-        {
-          "senderId": "BkhuQjXpZ",
-          "sentAt": "2017-10-26T13:54:40.924Z",
-          "data": "another hi!"
-        },
-        {
-          "senderId": "BkhuQjXpZ",
-          "sentAt": "2017-10-26T13:54:44.563Z",
-          "data": "another hi!"
-        },
-        {
-          "senderId": "BkhuQjXpZ",
-          "sentAt": "2017-10-26T13:54:45.651Z",
-          "data": "another hi!"
-        },
-        {
-          "senderId": "BkhuQjXpZ",
-          "sentAt": "2017-10-26T13:54:46.939Z",
-          "data": "another hi!"
-        }
-      ]
+      "conversationId": "BJPpkefyz",
+      "conversationName": "tester, admin",
+      "messages": []
+    },
+    {
+      "conversationId": "S1PpexzyM",
+      "conversationName": "tester, admin",
+      "messages": []
     }
   ]
 }
