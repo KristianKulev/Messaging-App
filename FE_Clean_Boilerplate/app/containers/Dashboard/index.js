@@ -17,6 +17,7 @@ import {
   makeSelectConversationsMeta,
   makeSelectОpenedConversationData,
   makeSelectОpenedConversationId,
+  makeSelectIsSessionNotificationsSubscriptionSet,
 } from './selectors';
 
 import { makeSelectCurrentUserTokenId } from 'containers/App/selectors';
@@ -24,10 +25,10 @@ import {
   openConversation,
   sendNewMessage,
   cancelSubscriptionsById,
-  initSubscriptionWithId,
+  initSubscriptionWithIdAndType,
   handleNewMessage,
-  // searchForUser,
-  // startNewConversationWithUser,
+  generalSessionNotificationReceived,
+  getConversations,
 } from './actions';
 
 import reducer from './reducer';
@@ -37,6 +38,7 @@ import DashboardHeader from 'components/DashboardHeader';
 import ConversationsTray from 'components/ConversationsTray';
 import Conversation from 'components/Conversation';
 import SearchAddUserWrapper from 'components/SearchAddUserWrapper';
+// import { getUsername } from 'services/auth.service';
 
 export class Dashboard extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -58,12 +60,33 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
 
   componentWillMount() {
 
-    // trigger conversation loading, if conversationId param is present
+    // trigger conversation loading, if conversationId param is present;
+    // prevent additional component loading by returning
     const conversationIdInUrl = this.props.match.params.conversationId;
 
     if (conversationIdInUrl && !this.props.openedConversationId) {
 
       this.props.openConversation(conversationIdInUrl);
+
+      return;
+    }
+
+    // if conversations aren't loaded
+    if (!this.props.conversationsMeta.length) {
+
+      this.props.getConversations();
+    }
+
+    // check store to see if general subscription is set and set one, if not
+    if (!this.props.isSessionNotificationsSubscriptionSet) {
+
+      // trigger start new general session-notifications subscription
+      this.props.initSubscriptionWithIdAndType({
+
+        id: this.props.userId,
+        type: 'session-notifications',
+        callback: this.props.generalSessionNotificationReceived,
+      });
     }
   }
 
@@ -77,10 +100,11 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
         this.props.cancelSubscriptionsById(this.props.openedConversationId);
       }
 
-      // trigger start new subscription
-      this.props.initSubscriptionWithId({
+      // trigger start new messages subscription
+      this.props.initSubscriptionWithIdAndType({
 
         id: newProps.openedConversationId,
+        type: 'message',
         callback: this.props.handleNewMessage,
       });
     }
@@ -97,26 +121,6 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
       },
     });
   }
-
-  // findUserByName(data) {
-  //   this.usernameToFind = data.usernameToFind;
-  //   console.log(data);
-
-
-  //   this.props.searchForUser(this.usernameToFind);
-  //   // Fire action to send a POST /search-for-user; payload: { username: 'name' }
-  // }
-
-  // startNewConversation() {
-
-  //   console.log(this.usernameToFind);
-
-  //   if (!this.usernameToFind) return;
-
-  //   this.props.startNewConversationWithUser(this.usernameToFind);
-
-  //   this.usernameToFind = '';
-  // }
 
   render() {
 
@@ -151,16 +155,17 @@ export class Dashboard extends React.Component { // eslint-disable-line react/pr
 Dashboard.propTypes = {
   conversationsMeta: PropTypes.array,
   openedConversationData: PropTypes.object,
+  getConversations: PropTypes.func.isRequired,
   openConversation: PropTypes.func.isRequired,
   submitMessage: PropTypes.func.isRequired,
   handleNewMessage: PropTypes.func.isRequired,
+  generalSessionNotificationReceived: PropTypes.func.isRequired,
   cancelSubscriptionsById: PropTypes.func.isRequired,
-  initSubscriptionWithId: PropTypes.func.isRequired,
+  initSubscriptionWithIdAndType: PropTypes.func.isRequired,
   openedConversationId: PropTypes.string,
   userId: PropTypes.string,
   match: PropTypes.object,
-  // searchForUser: PropTypes.func.isRequired,
-  // startNewConversationWithUser: PropTypes.func.isRequired,
+  isSessionNotificationsSubscriptionSet: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -168,17 +173,18 @@ const mapStateToProps = createStructuredSelector({
   conversationsMeta: makeSelectConversationsMeta(),
   openedConversationId: makeSelectОpenedConversationId(),
   userId: makeSelectCurrentUserTokenId(),
+  isSessionNotificationsSubscriptionSet: makeSelectIsSessionNotificationsSubscriptionSet(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
+    getConversations: () => dispatch(getConversations()),
     openConversation: conversationId => dispatch(openConversation(conversationId)),
     submitMessage: msgData => dispatch(sendNewMessage(msgData)),
     cancelSubscriptionsById: id => dispatch(cancelSubscriptionsById(id)),
-    initSubscriptionWithId: id => dispatch(initSubscriptionWithId(id)),
+    initSubscriptionWithIdAndType: subscriptionData => dispatch(initSubscriptionWithIdAndType(subscriptionData)),
     handleNewMessage: msgData => dispatch(handleNewMessage(msgData)),
-    // searchForUser: username => dispatch(searchForUser(username)),
-    // startNewConversationWithUser: username => dispatch(startNewConversationWithUser(username)),
+    generalSessionNotificationReceived: data => dispatch(generalSessionNotificationReceived(data)),
   };
 }
 

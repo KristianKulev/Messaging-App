@@ -3,7 +3,7 @@ import Nes from 'nes/client';
 class WebsocketClient {
   constructor() {
     this.socket = new Nes.Client('ws://localhost:8080');
-    this.cachedSubscriptionPath = '';
+    this.cachedSubscriptions = {}; // use for additional check, prevent duplicate subs
   }
 
   setupConnection() {
@@ -30,10 +30,10 @@ class WebsocketClient {
 
   initSubscription(subscriptionPath, callback) {
 
-    if (this.cachedSubscriptionPath) return;
+    if (this.cachedSubscriptions[subscriptionPath]) return;
 
       // save for future reference, when unsubscribing
-    this.cachedSubscriptionPath = subscriptionPath;
+    this.cachedSubscriptions[subscriptionPath] = subscriptionPath;
 
     this.socket.subscribe(subscriptionPath, (msg) => {
 
@@ -52,7 +52,7 @@ class WebsocketClient {
       // unsubsribe from all handlers for this Id
     this.socket.unsubscribe(subscriptionPath, null, err => err);
 
-    this.cachedSubscriptionPath = '';
+    this.cachedSubscriptions[subscriptionPath] = '';
   }
 }
 

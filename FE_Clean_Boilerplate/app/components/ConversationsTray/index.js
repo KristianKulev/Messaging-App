@@ -15,7 +15,6 @@ class ConversationsTray extends React.Component { // eslint-disable-line react/p
     this.props = props;
   }
 
-
   triggerOpenConversation(isConversationOpened, conversationId) {
 
     if (isConversationOpened) return;
@@ -27,14 +26,15 @@ class ConversationsTray extends React.Component { // eslint-disable-line react/p
 
     if (!this.props.conversationItems) return null;
 
-    const conversationItems = this.props.conversationItems.map((item, i) => {
+    let conversationItems = this.props.conversationItems.map((item, i) => {
 
       const isConversationOpened = this.props.selectedId && item.conversationId === this.props.selectedId;
+      const hasUnreadMessage = item.unreadMessage;
 
       return (
         <li
           key={i}
-          className={`row ${isConversationOpened ? 'is-selected' : ''}`}
+          className={`row ${isConversationOpened ? 'is-selected' : ''} ${hasUnreadMessage ? 'message-unread' : ''}`}
           onClick={() => this.triggerOpenConversation(isConversationOpened, item.conversationId)}>
           <p>
             <span className="img">img </span>{item.conversationName}
@@ -43,6 +43,9 @@ class ConversationsTray extends React.Component { // eslint-disable-line react/p
       );
     });
 
+    if (!conversationItems.length) {
+      conversationItems = <h3>Add friends to start chatting!</h3>;
+    }
 
     return (
       <aside className="conversations-tray-component column col-xs column--no-padding">

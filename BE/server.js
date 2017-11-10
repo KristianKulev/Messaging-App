@@ -60,11 +60,37 @@ class App {
         description: 'Chat message handler',
         handler: (request, reply) => {
 
-          // publish to subsribers
+          // publish new-message to subsribers
           this.server.publish(`/new-message/${request.params.id}`, request.payload.data);
 
+          // get the receiver/s ids from the notificationController, based on the notification ID - request.params.id
+          const participantsIds =
+            require('modules/notification/notification.controller').getParticipantsForNotification(request, reply);
+
+          /**
+           * Publish a general session-notification of type new-message-received.
+           * To be used, when a chat isn't the actively opened one from the user
+           */
+          const notificationData = {
+            type: 'new-message-received',
+            conversationId: request.params.id,
+            ...request.payload.data,
+          };
+
+          const notificationModel = {
+            serverInstance: this.server,
+            baseUrl: 'session-notifications',
+            notificationData: notificationData,
+            subscribersIds: participantsIds,
+            idToMissNotification: request.payload.data.senderId,
+          };
+
+          require('modules/notification/notification.controller').emitGeneralSessionNotification(notificationModel);
+          // TODO: after emmiting to the FE, save the unreadNotification to the activeConversationsMeta for that user in usersTable.json, so that it is accessible after a page refresh
+
+
           // send to the DB
-          require('modules/conversation/conversation.controller').sendNewMessage(request, reply)
+          require('modules/conversation/conversation.controller').sendNewMessage(request, reply);
         }
       }
     });
@@ -105,11 +131,15 @@ class App {
 
     this.setConfig();
 
-    this.server.register([require('nes'), require('plugin')], (err) => {
+    this.server.register([Nes], (err) => {
 
       console.log('registering!')
 
       this.server.subscription('/new-message/{id}');
+
+
+      // listen for session notifications subscriptions
+      this.server.subscription('/session-notifications/{id}');
 
       this.setupRoutes();
 

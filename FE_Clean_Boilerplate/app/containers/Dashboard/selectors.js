@@ -39,10 +39,16 @@ const makeSelectОpenedConversationId = () => createSelector(
   }
 );
 
+const makeSelectIsSessionNotificationsSubscriptionSet = () => createSelector(
+  selectDashboardDomain,
+  substate => substate.toJS().isSessionNotificationsSubscriptionSet
+);
+
 export default makeSelectDashboard;
 export {
   selectDashboardDomain,
   makeSelectConversationsMeta,
   makeSelectОpenedConversationData,
   makeSelectОpenedConversationId,
+  makeSelectIsSessionNotificationsSubscriptionSet,
 };

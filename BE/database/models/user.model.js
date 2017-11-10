@@ -59,11 +59,19 @@ class UserModel {
 
   addNewConversationForUser(username, newConversationData) {
 
-    return this.usersDb.get('users')
-      .find({ username: username })
+    const user =
+      this.usersDb.get('users')
+        .find({ username: username });
+
+    const userId = user.value().id;
+
+    user
       .get('activeConversationsMeta')
       .push(newConversationData)
       .write();
+
+      console.log(666, userId)
+    return userId;
   };
 
 }

@@ -13,8 +13,10 @@ import {
   SEND_NEW_MESSAGE,
   HANDLE_NEW_MESSAGE,
   CANCEL_SUBSCRIPTIONS_BY_ID,
-  INIT_SUBSCRIPTION_WITH_ID,
+  INIT_SUBSCRIPTION_WITH_ID_AND_TYPE,
   START_NEW_CONVERSATION_WITH_USER_RESULT,
+  INIT_SESSION_NOTIFICATIONS_SUBSCRIPTION_SUCCESS,
+  GENERAL_SESSION_NOTIFICATION_RECEIVED,
 } from './constants';
 
 export function getConversations() {
@@ -74,10 +76,10 @@ export function cancelSubscriptionsById(id) {
   };
 }
 
-export function initSubscriptionWithId(data) {
+export function initSubscriptionWithIdAndType(data) {
 
   return {
-    type: INIT_SUBSCRIPTION_WITH_ID,
+    type: INIT_SUBSCRIPTION_WITH_ID_AND_TYPE,
     data,
   };
 }
@@ -90,3 +92,16 @@ export function startNewConversationWithUserResult(data) {
   };
 }
 
+export function initSessionNotificationsSubscriptionSuccess() {
+
+  return {
+    type: INIT_SESSION_NOTIFICATIONS_SUBSCRIPTION_SUCCESS,
+  };
+}
+
+export function generalSessionNotificationReceived(data) {
+  return {
+    type: GENERAL_SESSION_NOTIFICATION_RECEIVED,
+    data,
+  };
+}

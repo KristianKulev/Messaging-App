@@ -132,20 +132,38 @@ class UserController {
   }
 
   startNewConversationWithUser(request, reply) {
+// get conversation data for the users from getNewConversationDataForUsers. then add to it the users ids, comming from
+//this.userModel.addNewConversationForUser and then make a this.conversationModel.startNewConversation with that new object, containing the userIds
 
     let parsedPayload = JSON.parse(request.payload);
 
     const usernameToStartWith = parsedPayload.usernameToStartWith;
     const usernameMakingTheRequest = parsedPayload.usernameMakingTheRequest;
 
-    //make a new conversation entry to conversationsDB
-    const newConversationData = this.conversationModel.startNewConversation([usernameMakingTheRequest, usernameToStartWith]);
+
+    const newConversationDataForUsers =
+      this.conversationModel.getNewConversationDataForUsers([usernameMakingTheRequest, usernameToStartWith]);
+
 
     // write a new conversation entry ID to usernameToStartWith and to the user, sending the request
-    this.userModel.addNewConversationForUser(usernameMakingTheRequest, newConversationData);
-    this.userModel.addNewConversationForUser(usernameToStartWith, newConversationData);
+    const userIdMakingTheRequest =
+      this.userModel.addNewConversationForUser(usernameMakingTheRequest, newConversationDataForUsers);
 
-    reply(newConversationData);
+    const userIdToStartWith =
+      this.userModel.addNewConversationForUser(usernameToStartWith, newConversationDataForUsers);
+
+
+    const newConversationData = {
+      ...newConversationDataForUsers,
+      participantsIds: [userIdMakingTheRequest, userIdToStartWith]
+    };
+
+    console.log('newConversationData', newConversationData);
+
+    //make a new conversation entry to conversationsDB
+    this.conversationModel.startNewConversation(newConversationData);
+
+    reply(newConversationDataForUsers);
   }
 }
 

@@ -7,15 +7,15 @@
       "role": "admin",
       "activeConversationsMeta": [
         {
-          "conversationId": "BJuhvyzyG",
+          "conversationId": "r1IFn-7kf",
           "conversationName": "tester, admin"
         },
         {
-          "conversationId": "BJPpkefyz",
-          "conversationName": "tester, admin"
+          "conversationId": "B1Vs3Wm1M",
+          "conversationName": "admin, tester"
         },
         {
-          "conversationId": "S1PpexzyM",
+          "conversationId": "Skkkv871M",
           "conversationName": "tester, admin"
         }
       ]
@@ -27,15 +27,15 @@
       "role": "basic",
       "activeConversationsMeta": [
         {
-          "conversationId": "BJuhvyzyG",
+          "conversationId": "r1IFn-7kf",
           "conversationName": "tester, admin"
         },
         {
-          "conversationId": "BJPpkefyz",
-          "conversationName": "tester, admin"
+          "conversationId": "B1Vs3Wm1M",
+          "conversationName": "admin, tester"
         },
         {
-          "conversationId": "S1PpexzyM",
+          "conversationId": "Skkkv871M",
           "conversationName": "tester, admin"
         }
       ]

@@ -12,11 +12,11 @@ const usersTableExample = {
       "activeConversationsIds": [
         {
           "id": "some_conversation_id",
-          "participentIds": ["id_one"]
+          "participants": ["id_one"]
         },
         {
           "id": "some_conversation_id", // this is group
-          "participentIds": ["id_one", "id_two", "id_three"]
+          "participants": ["id_one", "id_two", "id_three"]
         }
       ]
     }

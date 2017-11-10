@@ -29,5 +29,12 @@
     &:hover, &.is-selected {
       background-color: $secondary-grey;
     }
+
+    &.message-unread {
+      p {
+
+        color: $primary-orange;
+      }
+    }
   }
 }
