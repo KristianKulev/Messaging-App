@@ -30,6 +30,8 @@ class NotificationController {
         serverInstance.publish(`/${baseUrl}/${subscribersIds[i]}`, notificationData);
       }
     }
+
+    return subscribersIds.splice(idToMissNotification, 1);;
   }
 
 }

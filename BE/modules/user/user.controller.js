@@ -12,6 +12,7 @@ class UserController {
     this.getConversationsMeta = this.getConversationsMeta.bind(this);
     this.findUserByName = this.findUserByName.bind(this);
     this.startNewConversationWithUser = this.startNewConversationWithUser.bind(this);
+    this.addNewUnreadMsgToConversationMeta = this.addNewUnreadMsgToConversationMeta.bind(this);
   }
 
   /* Used for load tests */
@@ -132,8 +133,6 @@ class UserController {
   }
 
   startNewConversationWithUser(request, reply) {
-// get conversation data for the users from getNewConversationDataForUsers. then add to it the users ids, comming from
-//this.userModel.addNewConversationForUser and then make a this.conversationModel.startNewConversation with that new object, containing the userIds
 
     let parsedPayload = JSON.parse(request.payload);
 
@@ -142,7 +141,7 @@ class UserController {
 
 
     const newConversationDataForUsers =
-      this.conversationModel.getNewConversationDataForUsers([usernameMakingTheRequest, usernameToStartWith]);
+      this.conversationModel.getNewConversationDataForUsers([ usernameMakingTheRequest, usernameToStartWith ]);
 
 
     // write a new conversation entry ID to usernameToStartWith and to the user, sending the request
@@ -155,7 +154,7 @@ class UserController {
 
     const newConversationData = {
       ...newConversationDataForUsers,
-      participantsIds: [userIdMakingTheRequest, userIdToStartWith]
+      participantsIds: [ userIdMakingTheRequest, userIdToStartWith ]
     };
 
     console.log('newConversationData', newConversationData);
@@ -164,6 +163,11 @@ class UserController {
     this.conversationModel.startNewConversation(newConversationData);
 
     reply(newConversationDataForUsers);
+  }
+
+  addNewUnreadMsgToConversationMeta(receivers, notificationData) {
+
+    return this.userModel.addNewUnreadMsgToConversationMeta(receivers, notificationData);
   }
 }
 
@@ -174,5 +178,6 @@ module.exports = {
   validateNewUniqueUser: userController.validateNewUniqueUser,
   getConversationsMeta: userController.getConversationsMeta,
   findUserByName: userController.findUserByName,
-  startNewConversationWithUser: userController.startNewConversationWithUser
+  startNewConversationWithUser: userController.startNewConversationWithUser,
+  addNewUnreadMsgToConversationMeta: userController.addNewUnreadMsgToConversationMeta
 };

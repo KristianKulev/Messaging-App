@@ -85,9 +85,14 @@ class App {
             idToMissNotification: request.payload.data.senderId,
           };
 
-          require('modules/notification/notification.controller').emitGeneralSessionNotification(notificationModel);
-          // TODO: after emmiting to the FE, save the unreadNotification to the activeConversationsMeta for that user in usersTable.json, so that it is accessible after a page refresh
+          const notificationReceivers =
+            require('modules/notification/notification.controller')
+              .emitGeneralSessionNotification(notificationModel);
 
+
+          // TODO: this should not be called here, instead a check should be done on the FE, when a new general session-notification with type 'new-message-received', that checks if the currently opened conversation is the one, that the notification applies to. Only if it's not the one, a general notification, COMMING FROM THE FE should be dispatched, that says to the BE to do te following addNewUnreadMsgToConversationMeta. Additionally, when a conversation with unread msg is opened on the FE, another notification should be send to the BE, that says that the BE should clear that unreadMessage entry from the user.table.
+          require('modules/user/user.controller')
+            .addNewUnreadMsgToConversationMeta(notificationReceivers, notificationData);
 
           // send to the DB
           require('modules/conversation/conversation.controller').sendNewMessage(request, reply);

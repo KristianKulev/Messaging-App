@@ -14,6 +14,7 @@ class UserModel {
     this.addNewUser = this.addNewUser.bind(this);
     this.addNewConversationForUser = this.addNewConversationForUser.bind(this);
     this.getUserByNameShortInfo = this.getUserByNameShortInfo.bind(this);
+    this.addNewUnreadMsgToConversationMeta = this.addNewUnreadMsgToConversationMeta.bind(this);
   }
 
   getUserByName(username, callback) {
@@ -70,10 +71,24 @@ class UserModel {
       .push(newConversationData)
       .write();
 
-      console.log(666, userId)
     return userId;
   };
 
+  addNewUnreadMsgToConversationMeta(receivers, notificationData) {
+
+    // TODO - NB - after implementing the comment in server.js, this method will only be called with one receiverId, comming directly from the FE
+    const receiverId = receivers[0];
+
+    const user =
+      this.usersDb.get('users')
+        .find({ id: receiverId })
+        .get('activeConversationsMeta')
+        .find({ conversationId: notificationData.conversationId })
+        .assign({ unreadMessage: notificationData.data })
+        .write();
+
+    return notificationData.data;
+  };
 }
 
 const userModel = new UserModel(usersDb, shortid);
@@ -83,5 +98,6 @@ module.exports = {
   getUsersConversationsMetaById: userModel.getUsersConversationsMetaById,
   addNewUser: userModel.addNewUser,
   addNewConversationForUser: userModel.addNewConversationForUser,
-  getUserByNameShortInfo: userModel.getUserByNameShortInfo
+  getUserByNameShortInfo: userModel.getUserByNameShortInfo,
+  addNewUnreadMsgToConversationMeta: userModel.addNewUnreadMsgToConversationMeta
 };
