@@ -1,4 +1,5 @@
 import 'whatwg-fetch';
+import storageService from 'services/storage.service';
 
 /**
  * Parses the JSON returned by a network request
@@ -28,6 +29,9 @@ function checkStatus(response) {
 
   const error = new Error(response.statusText);
   error.response = response;
+
+
+  console.log('util', response);
   throw error;
 }
 
@@ -40,6 +44,9 @@ function checkStatus(response) {
  * @return {object}           The response data
  */
 export default function request(url, options) {
+
+  options.headers = { Authorization: storageService.get('session', 'token_id') }; // TODO: this should be real token
+
   return fetch(url, options)
     .then(checkStatus)
     .then(parseJSON);

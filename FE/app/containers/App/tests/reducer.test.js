@@ -13,7 +13,7 @@ describe('appReducer', () => {
     state = fromJS({
       loading: false,
       error: false,
-      currentUser: false,
+      currentUserTokenId: false,
       userData: fromJS({
         repositories: false,
       }),
@@ -42,7 +42,7 @@ describe('appReducer', () => {
     const expectedResult = state
       .setIn(['userData', 'repositories'], fixture)
       .set('loading', false)
-      .set('currentUser', username);
+      .set('currentUserTokenId', username);
 
     expect(appReducer(state, reposLoaded(fixture, username))).toEqual(expectedResult);
   });

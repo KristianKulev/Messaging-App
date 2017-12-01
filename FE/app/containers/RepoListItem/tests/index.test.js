@@ -41,7 +41,7 @@ describe('<RepoListItem />', () => {
   it('should not render the current username', () => {
     const renderedComponent = renderComponent({
       item,
-      currentUser: item.owner.login,
+      currentUserTokenId: item.owner.login,
     });
     expect(renderedComponent.text()).not.toContain(item.owner.login);
   });
@@ -49,7 +49,7 @@ describe('<RepoListItem />', () => {
   it('should render usernames that are not the current one', () => {
     const renderedComponent = renderComponent({
       item,
-      currentUser: 'nikgraf',
+      currentUserTokenId: 'nikgraf',
     });
     expect(renderedComponent.text()).toContain(item.owner.login);
   });

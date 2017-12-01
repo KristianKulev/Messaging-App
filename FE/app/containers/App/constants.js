@@ -9,7 +9,7 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
-export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
-export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
-export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
+export const SET_LOGGED_USER_DATA = 'boilerplate/App/SET_LOGGED_USER_DATA';
+export const USER_LOGGED_IN = 'boilerplate/App/USER_LOGGED_IN';
+export const USER_LOGGED_OUT = 'boilerplate/App/USER_LOGGED_OUT';
 export const DEFAULT_LOCALE = 'en';

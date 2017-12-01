@@ -10,41 +10,51 @@ import React from 'react';
 
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import TestPage from 'containers/TestPage/Loadable';
+import NotFoundPage from 'containers/NotFoundPage/index';
+import DashBoard from 'containers/DashBoard/index';
+
 import Login from 'containers/Login/index';
+import Register from 'containers/Register/index';
+import MainNav from 'containers/MainNav';
+import AdminPanel from 'containers/AdminPanel';
 
-import Header from 'components/Header';
-import Footer from 'components/Footer';
+import ReduxToastr from 'react-redux-toastr/lib';
 
-import FormValidationRules from '../../configs/FormValidation.config'; // eslint-disable-line
+import { userIsAuthenticated, userIsNotAuthenticated, userIsAuthenticatedFlag } from 'services/auth.service';
 
-const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 0 auto;
-  display: flex;
-  min-height: 100%;
-  padding: 0 16px;
-  flex-direction: column;
-`;
+export default class App extends React.Component { // eslint-disable-line react/prefer-stateless-function
+  constructor() {
+    super();
+    window.app = this;
+  }
 
-export default function App() {
-  return (
-    <AppWrapper>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/features" component={FeaturePage} />
-        <Route path="/test" component={TestPage} />
-        <Route path="/login" component={Login} />
+  render() {
+
+    return (
+      <section className="app-container container column full-height">
+        <MainNav userIsAuthenticatedFlag={userIsAuthenticatedFlag()}/>
+        <Switch>
+          <Route path="/admin-link" component={userIsAuthenticated(AdminPanel)} />
+          <Route path="/dashboard/:conversationId?" component={userIsAuthenticated(DashBoard)} />
+
+          <Route path="/login" component={userIsNotAuthenticated(Login)} />
+          <Route path="/register" component={userIsNotAuthenticated(Register)} />
 
 
-        {/* Used for NotFoundPage, place actual routes above */}
-        <Route path="" component={NotFoundPage} />
-      </Switch>
-      <Footer />
-    </AppWrapper>
-  );
+          {/* Used for NotFoundPage, place actual routes above */}
+          <Route path="" component={NotFoundPage} />
+        </Switch>
+        <ReduxToastr
+          timeOut={4000}
+          newestOnTop={false}
+          preventDuplicates
+          position="top-right"
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          progressBar/>
+
+      </section>
+    );
+  }
 }
+

@@ -1,37 +1,78 @@
+/**
+ *
+ * Header
+ *
+ */
+
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
+import { visibleOnlyWhenLoggedIn, getUsername, visibleOnlyAdmin } from 'services/auth.service';
 
-import A from './A';
-import Img from './Img';
-import NavBar from './NavBar';
-import HeaderLink from './HeaderLink';
-import Banner from './banner.jpg';
-import messages from './messages';
+import './styles.scss';
 
-class Header extends React.Component { // eslint-disable-line react/prefer-stateless-function
+const LogoutBtn = visibleOnlyWhenLoggedIn(props => (
+  <span onClick={() => { props.logout(); }} className="logout-btn">
+    Logout
+  </span>
+));
+
+const LoggedInAs = visibleOnlyWhenLoggedIn(props => (
+  <span className="logged-in-as">Logged: { props.loggedAs }</span>
+));
+
+const AdminLink = visibleOnlyAdmin(() => {
+  return (
+    <Link to="/admin-link">
+      Admin link for admin stuff
+    </Link>
+  );
+});
+
+const AuthenticatedNav = visibleOnlyWhenLoggedIn(props => (
+
+  <nav className="header-component row">
+    <Link to="/dashboard">
+      Dashboard
+    </Link>
+
+    <AdminLink/>
+    <LoggedInAs loggedAs={getUsername()} isAuthenticated={props.isAuthenticated}/>
+    <LogoutBtn logout={props.logout} isAuthenticated={props.isAuthenticated} />
+  </nav>
+
+));
+
+const UnauthenticatedNav = visibleOnlyWhenLoggedIn(props => (
+
+  <nav className="header-component row">
+    <Link to="/login">
+        Login
+      </Link>
+    <Link to="/register">
+        Register
+      </Link>
+  </nav>
+
+  ));
+
+
+class Header extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <div>
-        <A href="https://twitter.com/mxstbr">
-          <Img src={Banner} alt="react-boilerplate - Logo" />
-        </A>
-        <NavBar>
-          <HeaderLink to="/">
-            <FormattedMessage {...messages.home} />
-          </HeaderLink>
-          <HeaderLink to="/features">
-            <FormattedMessage {...messages.features} />
-          </HeaderLink>
-          <HeaderLink to="/test">
-            Test Page
-          </HeaderLink>
-          <HeaderLink to="/login">
-            Login
-          </HeaderLink>
-        </NavBar>
-      </div>
+      <section className="header-component row">
+        <UnauthenticatedNav isAuthenticated={!this.props.userIsAuthenticated}/>
+        <AuthenticatedNav
+          loggedAs={getUsername()}
+          logout={this.props.logout}
+          isAuthenticated={this.props.userIsAuthenticated} />
+      </section>
     );
   }
 }
+
+Header.propTypes = {
+  logout: React.PropTypes.func.isRequired,
+  userIsAuthenticated: React.PropTypes.bool.isRequired,
+};
 
 export default Header;

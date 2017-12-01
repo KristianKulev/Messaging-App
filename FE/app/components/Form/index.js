@@ -5,79 +5,89 @@
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
+import './styles.scss';
 
-const Form = ({className, children}) => {
-  return (
-    <div className={className}>
-        {children}
-    </div>
-  );
+import {
+  Form,
+} from 'formsy-react-components';
+
+class WrappedForm extends React.PureComponent {
+
+  constructor() {
+    super();
+    window.f = this;
+
+    this.state = {
+      canSubmit: false,
+      hasSubmitBeenTried: false,
+    };
+
+    this.formInstance = null;
+    this.submitForm = this.submitForm.bind(this);
+    this.refCallback = this.refCallback.bind(this);
+  }
+
+  toggleCanSubmit(newState) {
+
+    this.setState({
+      canSubmit: !!newState,
+    });
+  }
+
+  submitForm(data) {
+
+    if (!this.state.hasSubmitBeenTried) {
+
+      this.setState({
+        hasSubmitBeenTried: true,
+      });
+    }
+
+    if (this.formInstance.formsyForm.state.isValid) {
+      console.log('form is valid, pass submit', data);
+      this.props.onSubmitCallback(data);
+    }
+  }
+
+  refCallback(form) {
+    this.formInstance = form;
+  }
+
+  reset(input) {
+    this.formInstance.formsyForm.reset(input);
+
+    this.setState({
+      canSubmit: false,
+      hasSubmitBeenTried: false,
+    });
+  }
+
+  render() {
+
+    return (
+      <Form
+        onValid={() => this.toggleCanSubmit(true)}
+        onInvalid={() => this.toggleCanSubmit()}
+        onSubmit={data => this.submitForm(data)}
+        className={`${this.props.className} ${!this.state.hasSubmitBeenTried || this.state.canSubmit ? '' : 'form-invalid'} form-component`}
+        layout={this.props.layout || 'vertical'}
+        ref={this.refCallback}
+        validateOnSubmit={this.props.validateOnSubmit || true}>
+
+        {this.props.children}
+      </Form>
+    );
+  }
 }
-export default Form;
-// const StyledForm = styled(Form)`
-//     --primaryBlack: black;
-//     --radiusS: 2px;
-//     --radiusM: 5px;
-//     --paddingS: 5px;
-//     --paddingM: 10px;
-//     --paddingL: 15px;
-//     --marginS: 5px;
-//     --marginM: 10px;
-//     --marginL: 15px;
 
-//     .form-section {
-//         margin-bottom: var(--marginM);
-//     }
+WrappedForm.propTypes = {
+  children: PropTypes.array,
+  className: PropTypes.string,
+  layout: PropTypes.string,
+  validateOnSubmit: PropTypes.bool,
+  onSubmitCallback: PropTypes.func,
+};
 
-//     label {
-//         &>span {
-//             display: inline-block;
-//             margin-bottom: var(--marginS);
-//         }
-//     }
-//     input {
-//         width: 100%;
-//         height: 2.4375rem;
-//         padding: var(--paddingS);
-//         border: 1px solid var(--primaryBlack);
-//         border-radius: var(--radiusS);
-//         font-size: 1rem;
-//         box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
-//         transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
-//     }
-//     .is-invalid-input:not(:focus) {
-//         background-color: rgba(236, 88, 64, 0.1);
-//         border-color: #ec5840;
-//     }
-
-//     button {
-//         display: inline-block;
-//         text-align: center;
-//         line-height: 1;
-//         cursor: pointer;
-//         transition: background-color 0.25s ease-out, color 0.25s ease-out;
-//         vertical-align: middle;
-//         border: 1px solid transparent;
-//         border-radius: 0;
-//         padding: 0.85em 1em;
-//         margin: 0 0 1rem 0;
-//         font-size: 0.9rem;
-//         background-color: #2199e8;
-//         color: #fefefe;
-
-//         &.disabled, &[disabled] {
-//             opacity: 0.25;
-//             cursor: not-allowed;
-//         }
-//     }
-
-//     .form-error {
-//         display: inline-block;
-//         margin-top: var(--marginM);
-//         &.is-visible {
-//             color: red;
-//         }
-//     }
-// `;
-// export default StyledForm;
+export default WrappedForm;

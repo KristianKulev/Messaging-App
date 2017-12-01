@@ -3,51 +3,51 @@ import validator from 'validator';
 import Validation from 'validation';
 
 Object.assign(Validation.rules, {
-    api: {
-        hint: value => (
-            <button
-                className="form-error is-visible"
+  api: {
+    hint: value => (
+        <button
+            className="form-error is-visible"
             >
                 API Error on "{value}" value. Focus to hide.
             </button>
-        )
-    },
+        ),
+  },
 
-    required: {
-        rule: value => value.toString().trim(),
-        hint: () => <span className="form-error is-visible">Required</span>
-    },
+  required: {
+    rule: value => value.toString().trim(),
+    hint: () => <span className="form-error is-visible">Required</span>,
+  },
 
-    email: {
-        rule: value => validator.isEmail(value),
-        hint: value => <span className="form-error is-visible">{value} is not an Email.</span>
-    },
+  username: {
+    rule: value => validator.isUsername(value),
+    hint: value => <span className="form-error is-visible">{value} is not an Username.</span>,
+  },
 
-    alpha: {
-        rule: value => validator.isAlpha(value),
-        hint: () => (
-            <span className="form-error is-visible">
+  alpha: {
+    rule: value => validator.isAlpha(value),
+    hint: () => (
+        <span className="form-error is-visible">
                 String should contain only letters (a-zA-Z).
             </span>
-        )
-    },
+        ),
+  },
 
-    password: {
-        rule: (value, components) => {
-            const password = components.password.state;
-            const passwordConfirm = components.passwordConfirm.state;
-            const isBothUsed = password
+  password: {
+    rule: (value, components) => {
+        const password = components.password.state;
+        const passwordConfirm = components.passwordConfirm.state;
+        const isBothUsed = password
                 && passwordConfirm
                 && password.isUsed
                 && passwordConfirm.isUsed;
-            const isBothChanged = isBothUsed && password.isChanged && passwordConfirm.isChanged;
+        const isBothChanged = isBothUsed && password.isChanged && passwordConfirm.isChanged;
 
-            if (!isBothUsed || !isBothChanged) {
-                return true;
-            }
+        if (!isBothUsed || !isBothChanged) {
+            return true;
+          }
 
-            return password.value === passwordConfirm.value;
-        },
-        hint: () => <span className="form-error is-visible">Passwords should be equal.</span>
-    }
+        return password.value === passwordConfirm.value;
+      },
+    hint: () => <span className="form-error is-visible">Passwords should be equal.</span>,
+  },
 });

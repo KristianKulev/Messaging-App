@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { FormattedNumber } from 'react-intl';
 
-import { makeSelectCurrentUser } from 'containers/App/selectors';
+import { makeSelectCurrentUserTokenId } from 'containers/App/selectors';
 import ListItem from 'components/ListItem';
 import IssueIcon from './IssueIcon';
 import IssueLink from './IssueLink';
@@ -24,7 +24,7 @@ export class RepoListItem extends React.PureComponent { // eslint-disable-line r
 
     // If the repository is owned by a different person than we got the data for
     // it's a fork and we should show the name of the owner
-    if (item.owner.login !== this.props.currentUser) {
+    if (item.owner.login !== this.props.currentUserTokenId) {
       nameprefix = `${item.owner.login}/`;
     }
 
@@ -50,9 +50,9 @@ export class RepoListItem extends React.PureComponent { // eslint-disable-line r
 
 RepoListItem.propTypes = {
   item: PropTypes.object,
-  currentUser: PropTypes.string,
+  currentUserTokenId: PropTypes.string,
 };
 
 export default connect(createStructuredSelector({
-  currentUser: makeSelectCurrentUser(),
+  currentUserTokenId: makeSelectCurrentUserTokenId(),
 }))(RepoListItem);

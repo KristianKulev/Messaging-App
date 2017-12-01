@@ -2,7 +2,7 @@ import { fromJS } from 'immutable';
 
 import {
   selectGlobal,
-  makeSelectCurrentUser,
+  makeSelectCurrentUserTokenId,
   makeSelectLoading,
   makeSelectError,
   makeSelectRepos,
@@ -19,16 +19,16 @@ describe('selectGlobal', () => {
   });
 });
 
-describe('makeSelectCurrentUser', () => {
-  const currentUserSelector = makeSelectCurrentUser();
+describe('makeSelectCurrentUserTokenId', () => {
+  const currentUserTokenIdSelector = makeSelectCurrentUserTokenId();
   it('should select the current user', () => {
     const username = 'mxstbr';
     const mockedState = fromJS({
       global: {
-        currentUser: username,
+        currentUserTokenId: username,
       },
     });
-    expect(currentUserSelector(mockedState)).toEqual(username);
+    expect(currentUserTokenIdSelector(mockedState)).toEqual(username);
   });
 });
 

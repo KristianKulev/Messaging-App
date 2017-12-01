@@ -3,12 +3,16 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the login state domain
  */
-const selectLoginDomain = (state) => state.get('login');
+const selectLoginDomain = state => state.get('login');
 
 /**
  * Other specific selectors
  */
 
+const makeSelectLoginError = () => createSelector(
+  selectLoginDomain,
+  substate => substate.toJS().loginError
+);
 
 /**
  * Default selector used by Login
@@ -16,10 +20,11 @@ const selectLoginDomain = (state) => state.get('login');
 
 const makeSelectLogin = () => createSelector(
   selectLoginDomain,
-  (substate) => substate.toJS()
+  substate => substate.toJS()
 );
 
-export default makeSelectLogin;
 export {
   selectLoginDomain,
+  makeSelectLogin,
+  makeSelectLoginError,
 };
